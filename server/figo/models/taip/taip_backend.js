@@ -14,4 +14,4 @@ const ServerTCP = (serverPort, serverHost) => {
 }
 
 
-ServerTCP(7100, 'localhost')
+ServerTCP(7100, '0.0.0.0')
