@@ -1,0 +1,16 @@
+{
+  "name": "FiGo",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.3.4",
+    "bcrypt": "^3.0.6",
+    "meteor-node-stubs": "^0.4.1",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-router-dom": "^5.1.2",
+    "rsuite": "^4.1.1"
+  }
+}
