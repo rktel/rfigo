@@ -18,6 +18,8 @@ const ServerTCP = (serverPort, serverHost) => {
 
 const PDU = (raw) => {
     raw = raw.toString()
+    // console.log(raw)
+    raw = raw.split("\r\n")
     console.log(raw)
 }
 
