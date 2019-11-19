@@ -20,7 +20,7 @@ const PDU = (raw) => {
     const parser = (chunkraw) => {
         // console.log(chunkraw)
         chunkraw = chunkraw.split(";")
-        console.log(chunkraw)
+        console.log(chunkraw[chunkraw.length -1])
     }
     raw = raw.toString()
     // console.log(raw)
