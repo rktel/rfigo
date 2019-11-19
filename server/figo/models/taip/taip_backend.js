@@ -1,5 +1,5 @@
 import { createServer } from 'net'
-import {_} from 'meteor/underscore'
+import { _ } from 'meteor/underscore'
 
 const ServerTCP = (serverPort, serverHost) => {
 
@@ -17,6 +17,9 @@ const ServerTCP = (serverPort, serverHost) => {
 
 
 const PDU = (raw) => {
+    const parser = (chunkraw) => {
+        console.log(chunkraw)
+    }
     raw = raw.toString()
     // console.log(raw)
     raw = raw.split("\r\n")
@@ -24,9 +27,6 @@ const PDU = (raw) => {
     raw.map(element => {
         element && parser(element)
     })
-    const parser = (chunkraw) => {
-        console.log(chunkraw)
-    }
 }
 
 
