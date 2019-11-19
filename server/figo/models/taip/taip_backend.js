@@ -2,15 +2,23 @@ import { createServer } from 'net'
 
 
 const ServerTCP = (serverPort, serverHost) => {
+
     server = createServer((socketIn) => {
         socketIn.on('data', (data) => {
-            console.log(data.toString())
+            PDU(data)
         })
     })
 
     server.listen(serverPort, serverHost, () => {
         console.log(`ServerTCP Up on port ${serverPort}`)
     });
+}
+
+
+
+const PDU = (raw) => {
+    raw = raw.toString()
+    console.log(raw)
 }
 
 
