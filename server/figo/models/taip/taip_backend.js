@@ -18,6 +18,8 @@ const ServerTCP = (serverPort, serverHost) => {
 
 const PDU = (raw) => {
     const parser = (chunkraw) => {
+        // console.log(chunkraw)
+        chunkraw = chunkraw.split(";")
         console.log(chunkraw)
     }
     raw = raw.toString()
