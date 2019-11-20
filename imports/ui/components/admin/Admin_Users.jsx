@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { rstream } from '../../../api/streamers'
-import { Panel, FlexboxGrid } from 'rsuite'
+import { Panel, FlexboxGrid, Col } from 'rsuite'
 import { ButtonToolbar, Icon, IconButton, Button } from 'rsuite'
 
 import { Table } from 'rsuite'
@@ -15,8 +15,8 @@ const Admin_Users = () => {
         const onCreateUser = () => {
             if (formCreateUser.firstname && formCreateUser.lastname && formCreateUser.role) {
                 Meteor.call('createPersonal', formCreateUser)
+                onCloseModalCreateUser()
             }
-            onCloseModalCreateUser()
         }
         const onHandleChangeCreateUser = (elements) => {
             setFormCreateUser(elements)
@@ -145,25 +145,26 @@ const Admin_Users = () => {
     }
     return (
         <div>
-            <ModalCreateUser/>
-            <ModalConfirmRemoveUser/>
-            <FlexboxGrid style={{ marginTop: 8, paddingLeft: 5, paddingRight: 5 }}>
-                <FlexboxGrid.Item colspan={24}>
-                    <Panel bordered header={<h5>Usuarios</h5>}>
-                        <ButtonToolbar style={{marginBottom: 10}}>
+            <ModalCreateUser />
+            <ModalConfirmRemoveUser />
+            <FlexboxGrid style={{ marginTop: 8, paddingLeft: 5, paddingRight: 5 }} justify="center">
+                <FlexboxGrid.Item componentClass={Col} colspan={24} md={10}>
+                    <Panel bordered header={<h5>Usuarios</h5>} style={{ backgroundColor: 'white' }} shaded>
+                        <ButtonToolbar style={{ marginBottom: 10 }}>
                             <IconButton icon={<Icon icon="user-circle-o" />} placement="right" color="green" size="sm" onClick={onOpenModalCreateUser}>
                                 Nuevo
                             </IconButton>
                         </ButtonToolbar>
                         <Table
-                            height={window.innerHeight - 220}
+                            bordered
+                            height={window.innerHeight - 225}
                             data={users}
                             onRowClick={data => {
                                 // console.log(data);
                             }}
                         >
 
-                            <Column width={80} fixed>
+                            <Column width={80}>
                                 <HeaderCell>Nombre</HeaderCell>
                                 <Cell dataKey="firstname" />
                             </Column>
@@ -173,7 +174,7 @@ const Admin_Users = () => {
                                 <Cell dataKey="lastname" />
                             </Column>
 
-                            <Column width={60}>
+                            <Column width={70}>
                                 <HeaderCell>Rol</HeaderCell>
                                 <Cell dataKey="role" />
                             </Column>
@@ -188,7 +189,7 @@ const Admin_Users = () => {
                                 <Cell dataKey="password" />
                             </Column>
 
-                            <Column width={90} fixed="right">
+                            <Column width={55} fixed="right">
                                 <HeaderCell>Action</HeaderCell>
 
                                 <Cell>
@@ -199,9 +200,9 @@ const Admin_Users = () => {
                                         }
                                         return (
                                             <span>
-                                                <Button onClick={handleOnRemoveItem} size='xs' color='red'> Eliminar </Button>
+                                                <IconButton onClick={handleOnRemoveItem} icon={<Icon icon="trash" />} circle size="sm" color='red' />
                                             </span>
-                                        );
+                                        )
                                     }}
                                 </Cell>
                             </Column>

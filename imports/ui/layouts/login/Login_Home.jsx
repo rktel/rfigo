@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Container, Header, Content, Footer } from 'rsuite'
-import { Navbar, Panel } from 'rsuite'
+import { Container, Header, Content } from 'rsuite'
+import { Panel } from 'rsuite'
 import { Form, ControlLabel, FormControl, FormGroup } from 'rsuite'
 import { ButtonToolbar, Button } from 'rsuite'
+
+import App_Footer from '../../components/app/App_Footer'
 
 import assert from 'assert'
 
@@ -19,7 +21,6 @@ const Login_Home = (props) => {
         username: '',
         password: ''
     })
-    const handleOnChangeFormLogin = elements => setformLogin(elements)
     const handleOnClickLoginBtn = () => {
         if (formLogin.username && formLogin.password) {
             const { username, password } = formLogin
@@ -36,35 +37,38 @@ const Login_Home = (props) => {
             })
         }
     }
+
+    const LoginHeader = () => (
+        <div>
+            <h4><img src="/img/learn.svg" /></h4>
+            <h4>FiGo</h4><br/>
+            <h5 style={{ textAlign: 'center', color: '#777' }}>Login</h5>
+        </div>
+    )
+
     return (
-        <Container className="flex-container-login" style={{ height: window.innerHeight }}>
-            <Header className="flex-item-login">
-                <Navbar className="header-navbar">
-                    <Navbar.Header>
-                        <img src="/img/seclog.png" alt="Securitas Logo" height="46" className="brand-img" />
-                    </Navbar.Header>
-                </Navbar>
-            </Header>
-            <Content className="flex-item-login">
-                <Panel header={<div><h4>FiGo</h4><h5 style={{ textAlign: 'center', color: '#777' }}>Login</h5></div>} bordered style={{ backgroundColor: 'white' }}>
-                    <Form fluid formValue={formLogin} onChange={handleOnChangeFormLogin}>
-                        <FormGroup>
+        <Container style={{ height: window.innerHeight }}>
+            <Header></Header>
+            <Content className="flex-container-center">
+                <Panel header={<LoginHeader />} bordered shaded style={{ backgroundColor: 'white', paddingTop: 20, paddingBottom: 20, width: 290 }}>
+                    <Form fluid formValue={formLogin} onChange={elements => setformLogin(elements)} >
+                        <FormGroup >
                             <ControlLabel>Usuario</ControlLabel>
-                            <FormControl name="username" style={{ width: 280 }} />
+                            <FormControl name="username" />
                         </FormGroup>
                         <FormGroup>
                             <ControlLabel>Contraseña</ControlLabel>
-                            <FormControl name="password" type="password" style={{ width: 280 }} />
+                            <FormControl name="password" type="password" />
                         </FormGroup>
                         <FormGroup>
                             <ButtonToolbar>
-                                <Button color="blue" block onClick={handleOnClickLoginBtn}>Ingresar</Button>
+                                <Button color="violet" block onClick={handleOnClickLoginBtn}>Ingresar</Button>
                             </ButtonToolbar>
                         </FormGroup>
                     </Form>
                 </Panel>
             </Content>
-            <Footer className="flex-item-login"><small>&copy; Copyright {new Date().getFullYear()}, Securitas-Perú</small></Footer>
+            <App_Footer />
         </Container>
     )
 }
