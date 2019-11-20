@@ -41,7 +41,7 @@ const Login_Home = (props) => {
     const LoginHeader = () => (
         <div>
             <h4><img src="/img/learn.svg" /></h4>
-            <h4>FiGo</h4><br/>
+            <h4>FiGo 2020</h4><br/>
             <h5 style={{ textAlign: 'center', color: '#777' }}>Login</h5>
         </div>
     )
