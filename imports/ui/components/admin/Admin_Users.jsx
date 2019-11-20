@@ -32,7 +32,7 @@ const Admin_Users = () => {
             { label: 'Admin', value: 'Admin' },
         ]
         return (
-            <Modal show={showModalCreateUser} onHide={onCloseModalCreateUser} size="xs">
+            <Modal show={showModalCreateUser} onHide={onCloseModalCreateUser} size="xs" style={{width:290}}>
                 <Modal.Header>
                     <Modal.Title>Nuevo Usuario</Modal.Title>
                 </Modal.Header>
@@ -41,6 +41,7 @@ const Admin_Users = () => {
                         fluid
                         onChange={onHandleChangeCreateUser}
                         formValue={formCreateUser}
+                        
                     >
                         <FormGroup>
                             <ControlLabel>Nombres</ControlLabel>
@@ -70,7 +71,7 @@ const Admin_Users = () => {
     //MODAL CONFIRM REMOVE COMPONENT
     const ModalConfirmRemoveUser = () => {
         return (
-            <Modal backdrop="static" show={showModalConfirmRemoveUser} onHide={onCloseModalConfirmRemoveUser} size="xs">
+            <Modal backdrop="static" show={showModalConfirmRemoveUser} onHide={onCloseModalConfirmRemoveUser} size="xs" style={{width:290}}>
                 <Modal.Body>
                     <Icon
                         icon="remind"
@@ -80,7 +81,7 @@ const Admin_Users = () => {
                         }}
                     />
                     {'  '}
-                    {`¿Esta seguro(a)? ¿Desea eliminar el usuario ${userToRemove.firstname}?`}
+                    {`¿Esta seguro(a) de eliminar el usuario ${userToRemove.firstname}?`}
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={onRemoveUser} appearance="primary">
@@ -190,7 +191,7 @@ const Admin_Users = () => {
                             </Column>
 
                             <Column width={55} fixed="right">
-                                <HeaderCell>Action</HeaderCell>
+                                <HeaderCell>Accion</HeaderCell>
 
                                 <Cell>
                                     {item => {
