@@ -1,8 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Sidenav, Nav, Icon } from 'rsuite'
+import { Sidenav, Nav, Icon, Dropdown } from 'rsuite'
 
 const Figo_Sidenav = (props) => {
+    const handleClickLogoutBtn = () => {
+        Meteor.logout()
+        resetRmainUser()
+        props.history.push('/login')
+    }
+    const resetRmainUser = () => {
+        localStorage.removeItem('rmain_user_role')
+        localStorage.removeItem('rmain_user_spa')
+        localStorage.removeItem('rmain_user_firstname')
+        localStorage.removeItem('rmain_user_lastname')
+    }
     useEffect(() => {
         switch (props.history.location.pathname) {
             case "/figo/deviceson":
@@ -19,9 +30,11 @@ const Figo_Sidenav = (props) => {
         }
     }, [])
     const [activeKey, setActiveKey] = useState('1')
+    const AppIcon = () => <img src="/img/learn.svg" alt="Figo Logo" height="30" className="app-img" />
     return (
-        <Sidenav className="flex-item" expanded={false} activeKey={activeKey} onSelect={(key) => setActiveKey(key)}>
+        <Sidenav className="flex-item" expanded={false} activeKey={activeKey} onSelect={(key) => setActiveKey(key)} style={{ height: '100%' }}>
             <Nav>
+                <Nav.Item eventKey="0" renderItem={() => <AppIcon />} hasTooltip={false}></Nav.Item>
                 <Nav.Item eventKey="1" icon={<Icon icon="hdd-o" />} onClick={() => props.history.push('/figo/deviceson')}>
                     Dispositivos online
                 </Nav.Item>
@@ -31,6 +44,15 @@ const Figo_Sidenav = (props) => {
                 <Nav.Item eventKey="3" icon={<Icon icon="file-code-o" />} onClick={() => props.history.push('/figo/scripts')}>
                     Scripts
                 </Nav.Item>
+                <Dropdown
+                    placement="rightStart"
+                    eventKey="4"
+                    title="Opciones"
+                    icon={<Icon icon="more" />}
+                >
+                    <Dropdown.Item eventKey="4-1" onClick={handleClickLogoutBtn}>Cerrar sesion</Dropdown.Item>
+
+                </Dropdown>
             </Nav>
         </Sidenav >
     )

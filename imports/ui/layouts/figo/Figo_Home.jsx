@@ -1,30 +1,35 @@
 
 import React from 'react'
-import { Container, Content } from 'rsuite'
+import { Container, Content, Sidebar, FlexboxGrid, Col } from 'rsuite'
 import { Route } from 'react-router-dom'
 
 import App_Header from '../../components/app/App_Header'
 import App_Footer from '../../components/app/App_Footer'
+
 
 import Figo_Deviceson from '../../components/figo/Figo_Deviceson'
 import Figo_Scripts from '../../components/figo/Figo_Scripts'
 import Figo_Taskstatus from '../../components/figo/Figo_Taskstatus'
 import Figo_Sidenav from '../../components/figo/Figo_Sidenav'
 
-const Figo_Home = () => {
+const Figo_Home = (props) => {
 
     return (
-        <Container style={{ height: window.innerHeight }}>
-            <App_Header />
-            <Content className="flex-container">
+        <Container style={{ height: props.heightApp }}>
+            <Sidebar width={56}>
                 <Figo_Sidenav />
-                <section className="flex-item" style={{ overflow: 'auto'}}>
-                    <Route path={'/figo/deviceson/'} render={() => (<Figo_Deviceson />)} />
+            </Sidebar>
+            <Container>
+                
+                <Content>
+
+                    <Route path={'/figo/deviceson/'} render={() => (<Figo_Deviceson heightApp={props.heightApp} />)} />
                     <Route path={'/figo/taskstatus/'} render={() => (< Figo_Taskstatus />)} />
                     <Route path={'/figo/scripts/'} render={() => (<Figo_Scripts />)} />
-                </section>
-            </Content>
-            <App_Footer />
+
+                </Content>
+            </Container>
+
         </Container>
     )
 }

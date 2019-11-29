@@ -30,10 +30,8 @@ Meteor.methods({
         rstream.emit('updateUsers')
     },
     removePersonal(personal) {
-        const { _id, userId } = personal
-        if (userId) {
-            Meteor.users.remove({ _id: userId })
-        }
+        const { _id, userId } = personal;
+        (userId) && Meteor.users.remove({ _id: userId })
         Personal.remove({ _id })
         rstream.emit('updateUsers')
     }

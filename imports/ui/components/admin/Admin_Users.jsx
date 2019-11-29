@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react'
 import { rstream } from '../../../api/streamers'
 import { Panel, FlexboxGrid, Col } from 'rsuite'
@@ -10,6 +11,8 @@ import { Modal } from 'rsuite'
 import { InputPicker } from 'rsuite'
 import { Form, FormGroup, ControlLabel, FormControl } from 'rsuite'
 
+import assert from 'assert'
+
 const Admin_Users = () => {
     const ModalCreateUser = () => {
         const onCreateUser = () => {
@@ -18,21 +21,22 @@ const Admin_Users = () => {
                 onCloseModalCreateUser()
             }
         }
-        const onHandleChangeCreateUser = (elements) => {
-            setFormCreateUser(elements)
-        }
+
         const [formCreateUser, setFormCreateUser] = useState({
             firstname: '',
             lastname: '',
             email: '',
             role: '',
         })
+        const onHandleChangeCreateUser = (elements) => {
+            setFormCreateUser(elements)
+        }
         const userRolList = [
             { label: 'User', value: 'User' },
             { label: 'Admin', value: 'Admin' },
         ]
         return (
-            <Modal show={showModalCreateUser} onHide={onCloseModalCreateUser} size="xs" style={{width:290}}>
+            <Modal show={showModalCreateUser} onHide={onCloseModalCreateUser} size="xs" style={{ width: 290 }} backdrop= {false} >
                 <Modal.Header>
                     <Modal.Title>Nuevo Usuario</Modal.Title>
                 </Modal.Header>
@@ -41,7 +45,6 @@ const Admin_Users = () => {
                         fluid
                         onChange={onHandleChangeCreateUser}
                         formValue={formCreateUser}
-                        
                     >
                         <FormGroup>
                             <ControlLabel>Nombres</ControlLabel>
@@ -71,7 +74,7 @@ const Admin_Users = () => {
     //MODAL CONFIRM REMOVE COMPONENT
     const ModalConfirmRemoveUser = () => {
         return (
-            <Modal backdrop="static" show={showModalConfirmRemoveUser} onHide={onCloseModalConfirmRemoveUser} size="xs" style={{width:290}}>
+            <Modal backdrop="static" show={showModalConfirmRemoveUser} onHide={onCloseModalConfirmRemoveUser} size="xs" style={{ width: 290 }}>
                 <Modal.Body>
                     <Icon
                         icon="remind"
@@ -94,24 +97,23 @@ const Admin_Users = () => {
             </Modal>
         )
     }
+        // SET STATES
+    const [users, setUsers] = useState([])
     // HOOK EFFECT
     useEffect(_ => {
         setUsersByMeteor()
         rstream.on('updateUsers', () => {
-            console.log('updateUsers')
             setUsersByMeteor()
         })
     }, [])
     // HELP FUNCTIONS
     const setUsersByMeteor = () => {
-        Meteor.call('getAllPersonal', (error, result) => {
-            if (!error && result) {
-                setUsers(result)
-            }
+        Meteor.call('getAllPersonal', (getAllPersonalError, allPersonal) => {
+            assert.notDeepStrictEqual(allPersonal, undefined)
+            setUsers(allPersonal)
         })
     }
-    // SET STATES
-    const [users, setUsers] = useState([])
+
     const [userToRemove, setUserToRemove] = useState({})
     const [showModalConfirmRemoveUser, setShowModalConfirmRemoveUser] = useState(false)
     const [showModalCreateUser, setShowModalCreateUser] = useState(false)
@@ -149,14 +151,15 @@ const Admin_Users = () => {
             <ModalCreateUser />
             <ModalConfirmRemoveUser />
             <FlexboxGrid style={{ marginTop: 8, paddingLeft: 5, paddingRight: 5 }} justify="center">
-                <FlexboxGrid.Item componentClass={Col} colspan={24} md={10}>
-                    <Panel bordered header={<h5>Usuarios</h5>} style={{ backgroundColor: 'white' }} shaded>
+                <FlexboxGrid.Item componentClass={Col} colspan={24} md={14}>
+                    <Panel bordered header={<h5>Usuarios</h5>} style={{ backgroundColor: '#1A1D24' }} shaded>
                         <ButtonToolbar style={{ marginBottom: 10 }}>
                             <IconButton icon={<Icon icon="user-circle-o" />} placement="right" color="green" size="sm" onClick={onOpenModalCreateUser}>
                                 Nuevo
                             </IconButton>
                         </ButtonToolbar>
                         <Table
+                            
                             bordered
                             height={window.innerHeight - 225}
                             data={users}
@@ -190,7 +193,7 @@ const Admin_Users = () => {
                                 <Cell dataKey="password" />
                             </Column>
 
-                            <Column width={55} fixed="right">
+                            <Column width={70} fixed="right">
                                 <HeaderCell>Accion</HeaderCell>
 
                                 <Cell>

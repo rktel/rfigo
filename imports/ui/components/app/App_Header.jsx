@@ -17,9 +17,9 @@ const App_Header = (props) => {
     }
     return (
         <Header className="flex-item-admin">
-            <Navbar className="header-navbar" appearance="inverse">
+            <Navbar appearance="inverse">
                 <Navbar.Header>
-                    <img src="/img/seclog.png" alt="Securitas Logo" height="46" className="brand-img" />
+                    
                 </Navbar.Header>
                 <Navbar.Body>
                     <Nav pullRight>

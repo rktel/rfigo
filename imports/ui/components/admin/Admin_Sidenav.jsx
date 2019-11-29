@@ -16,9 +16,13 @@ const Admin_Sidenav = (props) => {
         }
     }, [])
     const [activeKey, setActiveKey] = useState('1')
+    const AppIcon = () => <img src="/img/learn.svg" alt="Figo Logo" height="30" className="app-img" />
     return (
-        <Sidenav className="flex-item" expanded={false} activeKey={activeKey} onSelect={(key) => setActiveKey(key)}>
+        <Sidenav className="flex-item" expanded={false} activeKey={activeKey} onSelect={(key) => setActiveKey(key)} style={{ height: '100%' }}>
             <Nav>
+                <Nav.Item eventKey="0" renderItem={() => <AppIcon />} hasTooltip={false}>
+
+                </Nav.Item>
                 <Nav.Item eventKey="1" icon={<Icon icon="squares" />} onClick={() => props.history.push('/admin/dashboard')}>
                     Dashboard
                 </Nav.Item>

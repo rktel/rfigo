@@ -1,26 +1,79 @@
-import React from 'react'
-import { FlexboxGrid,  Panel} from 'rsuite'
-import { Grid, Row, Col} from 'rsuite'
+import React, { useState, useEffect } from 'react'
+import { FlexboxGrid, Panel, Col, List, IconButton, Icon } from 'rsuite'
+import { ButtonToolbar, InputGroup, Input } from 'rsuite'
+import { Checkbox } from 'rsuite'
 
 
-const Figo_Deviceson = () => {
+const data = [
+    { value: '201', label: '201' },
+    { value: '202', label: '202' },
+    { value: '203', label: '203' },
+    { value: '204', label: '204' },
+    { value: '205', label: '205' },
+    { value: '206', label: '206' },
+    { value: '206', label: '206' },
+    { value: '206', label: '206' },
+    { value: '206', label: '206' },
+    { value: '206', label: '206' },
+    { value: '206', label: '206' },
+    { value: '206', label: '206' },
+    { value: '206', label: '206' },
+    { value: '222', label: '222' },
+
+]
+const actionList = [
+    { value: 1, label: 'Crear grupo' },
+    { value: 2, label: 'Enviar comando' },
+    { value: 3, label: 'Enviar script' },
+    { value: 4, label: 'Crear canal individual' },
+    { value: 5, label: 'Crear canal broadcast' },
+]
+const scriptList = [
+    { value: 'a', label: 'One' },
+    { value: 'b', label: 'Two' },
+    { value: 'c', label: 'Three' },
+    { value: 'd', label: 'Four' },
+    { value: 'e', label: 'Five' },
+]
+
+const Figo_Deviceson = (props) => {
+
+    const ActionButtonGroup = () => (
+        <ButtonToolbar>
+            <IconButton icon={<Icon icon="facebook-official" />} color="blue" circle size="sm" />
+            <IconButton icon={<Icon icon="google-plus-circle" />} color="red" circle size="sm" />
+            <IconButton icon={<Icon icon="twitter" />} color="cyan" circle size="sm" />
+            <IconButton icon={<Icon icon="linkedin" />} color="blue" circle size="sm" />
+        </ButtonToolbar>
+    )
     return (
 
-        <FlexboxGrid style={{ marginTop: 8 }}>
-            <FlexboxGrid.Item componentClass={Col} colspan={24} md={8}>
-                <Panel bordered shaded style={{ backgroundColor: 'white', height: window.innerHeight - 85 }} header={<h5>Dispositivos Online {5}</h5>}>
-                    <Grid fluid>
-                        <Row gutter={16}>
-                            <Col xs={12}>xs={12}</Col>
-                            <Col xs={12}>xs={12}</Col>
-                        </Row>
-                    </Grid>
+        <FlexboxGrid style={{ height: props.heightApp - 56 }} justify="start" align="top">
+            <FlexboxGrid.Item colspan={24} componentClass={Col} md={7}>
+                <Panel shaded header={<span>Dispositivos</span>} style={{ backgroundColor: '#0f131a' }} collapsible>
+                    <InputGroup style={{ marginBottom: 10 }}>
+                        <Input placeholder="Buscar dispositivo"  />
+                        <InputGroup.Addon><Icon icon="search" /></InputGroup.Addon>
+                    </InputGroup>
+                    <List size="sm" bordered style={{ marginBottom: 10 }}>
+                        <List.Item>
+                            <FlexboxGrid justify="space-between">
+                                <FlexboxGrid.Item><Checkbox> All </Checkbox></FlexboxGrid.Item>
+                                <FlexboxGrid.Item><ActionButtonGroup /></FlexboxGrid.Item>
+                            </FlexboxGrid>
+                        </List.Item>
+                    </List>
+                    <List hover style={{ height: props.heightApp - 200 }} size="sm" bordered>
+                        {data.map((item, index) =>
+                            <List.Item key={index} index={index}>
+                                <Checkbox> {item.label} </Checkbox>
+                            </List.Item>
+                        )}
+                    </List>
                 </Panel>
             </FlexboxGrid.Item>
-            <FlexboxGrid.Item componentClass={Col} colspan={24} md={16}>
-                <Panel bordered shaded style={{ backgroundColor: 'white', height: window.innerHeight - 85 }} header={<h5>Action</h5>}>
-                    <h4>Send</h4>
-                </Panel>
+            <FlexboxGrid.Item colspan={24} componentClass={Col} md={15}>
+                B
             </FlexboxGrid.Item>
         </FlexboxGrid>
 
