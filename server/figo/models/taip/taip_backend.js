@@ -26,7 +26,7 @@ const PDU = (raw) => {
         chunkraw = chunkraw.split(";")
         // get ID
         const mobeliID = chunkraw[chunkraw.length -1].match(/\d/g).join("")
-        console.log(mobeliID)
+        console.log(chunkraw[chunkraw.length -1])
     }
     raw = raw.toString()
     // console.log(raw)
