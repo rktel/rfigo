@@ -40,10 +40,8 @@ const Figo_Deviceson = (props) => {
 
     const ActionButtonGroup = () => (
         <ButtonToolbar>
-            <IconButton icon={<Icon icon="facebook-official" />} color="blue" circle size="sm" />
-            <IconButton icon={<Icon icon="google-plus-circle" />} color="red" circle size="sm" />
-            <IconButton icon={<Icon icon="twitter" />} color="cyan" circle size="sm" />
-            <IconButton icon={<Icon icon="linkedin" />} color="blue" circle size="sm" />
+            <IconButton icon={<Icon icon="comment" />} color="blue" circle size="sm" />
+            <IconButton icon={<Icon icon="file-text" />} color="red" circle size="sm" />
         </ButtonToolbar>
     )
     return (
@@ -52,7 +50,7 @@ const Figo_Deviceson = (props) => {
             <FlexboxGrid.Item colspan={24} componentClass={Col} md={7}>
                 <Panel shaded header={<span>Dispositivos</span>} style={{ backgroundColor: '#0f131a' }} collapsible>
                     <InputGroup style={{ marginBottom: 10 }}>
-                        <Input placeholder="Buscar dispositivo"  />
+                        <Input placeholder="Buscar dispositivo"/>
                         <InputGroup.Addon><Icon icon="search" /></InputGroup.Addon>
                     </InputGroup>
                     <List size="sm" bordered style={{ marginBottom: 10 }}>
