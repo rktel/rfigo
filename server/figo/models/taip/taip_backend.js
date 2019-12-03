@@ -1,6 +1,9 @@
 import { createServer } from 'net'
 import { _ } from 'meteor/underscore'
 
+
+
+
 const ServerTCP = (serverPort, serverHost) => {
 
     server = createServer((socketIn) => {
@@ -17,10 +20,13 @@ const ServerTCP = (serverPort, serverHost) => {
 
 
 const PDU = (raw) => {
+    // one raw
     const parser = (chunkraw) => {
         // console.log(chunkraw)
         chunkraw = chunkraw.split(";")
-        console.log(chunkraw[chunkraw.length -1])
+        // get ID
+        const mobeliID = chunkraw[chunkraw.length -1].match(/\d/g).join("")
+        console.log(mobeliID)
     }
     raw = raw.toString()
     // console.log(raw)
