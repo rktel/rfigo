@@ -8,8 +8,9 @@ const ServerTCP = (serverPort, serverHost) => {
 
     server = createServer((socketIn) => {
         socketIn.on('data', (data) => {
-            console.log(data.toString())
-            PDU(data)
+            // console.log(data.toString())
+            const { mobileID } = PDU(data)
+            mobileID && console.log(mobileID)
         })
     })
 
@@ -22,12 +23,13 @@ const ServerTCP = (serverPort, serverHost) => {
 
 const PDU = (raw) => {
     // one raw
+    let mobileID = null
+
     const parser = (chunkraw) => {
         // console.log(chunkraw)
         chunkraw = chunkraw.split(";")
         // get ID
-        const mobeliID = chunkraw[chunkraw.length -1].match(/\d/g).join("")
-        console.log(chunkraw[chunkraw.length -1])
+        mobeliID = chunkraw[chunkraw.length - 1].match(/\d/g).join("")
     }
     raw = raw.toString()
     // console.log(raw)
@@ -36,6 +38,8 @@ const PDU = (raw) => {
     raw.map(element => {
         element && parser(element)
     })
+
+    return { mobileID: mobileID }
 }
 
 
