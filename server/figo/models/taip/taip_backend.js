@@ -8,6 +8,7 @@ const ServerTCP = (serverPort, serverHost) => {
 
     server = createServer((socketIn) => {
         socketIn.on('data', (data) => {
+            console.log(data)
             PDU(data)
         })
     })
