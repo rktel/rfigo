@@ -14,20 +14,16 @@ const mobiles_8 = new Map()
 const mobiles_9 = new Map()
 // get contenedor
 const getContainer = (index) => {
-    switch (index) {
-
-        case "0": mobiles_0; break;
-        case "1": mobiles_1; break;
-        case "2": mobiles_2; break;
-        case "3": mobiles_3; break;
-        case "4": mobiles_4; break;
-        case "5": mobiles_5; break;
-        case "6": mobiles_6; break;
-        case "7": mobiles_7; break;
-        case "8": mobiles_8; break;
-        case "9": mobiles_9; break;
-
-    }
+    if (index === '0') return mobiles_0
+    if (index === '1') return mobiles_1
+    if (index === '2') return mobiles_2
+    if (index === '3') return mobiles_3
+    if (index === '4') return mobiles_4
+    if (index === '5') return mobiles_5
+    if (index === '6') return mobiles_6
+    if (index === '7') return mobiles_7
+    if (index === '8') return mobiles_8
+    if (index === '9') return mobiles_9
 }
 
 const ServerTCP = (serverPort, serverHost) => {
@@ -38,8 +34,8 @@ const ServerTCP = (serverPort, serverHost) => {
             if (mobileID) {
                 const lastNumber = mobileID[mobileID.length - 1]
                 const container = getContainer(lastNumber)
-                if(container.has(mobileID)){}
-                else{
+                if (container.has(mobileID)) { }
+                else {
                     socketIn['mobileID'] = mobileID
                     container.set(mobileID, socketIn)
                 }
