@@ -3,6 +3,7 @@ import { FlexboxGrid, Panel, Col, List, IconButton, Icon } from 'rsuite'
 import { ButtonToolbar, InputGroup, Input } from 'rsuite'
 import { Checkbox } from 'rsuite'
 
+import { rmain } from '../../../api/streamers'
 
 const data = [
     { value: '201', label: '201' },
@@ -37,7 +38,11 @@ const scriptList = [
 ]
 
 const Figo_Deviceson = (props) => {
-
+    useEffect(() => {
+        rmain.on('devices', (devices) => {
+            console.log(devices)
+        })
+    }, [])
     const ActionButtonGroup = () => (
         <ButtonToolbar>
             <IconButton icon={<Icon icon="comment" />} color="blue" circle size="sm" />
@@ -50,7 +55,7 @@ const Figo_Deviceson = (props) => {
             <FlexboxGrid.Item colspan={24} componentClass={Col} md={7}>
                 <Panel shaded header={<span>Dispositivos</span>} style={{ backgroundColor: '#0f131a' }} collapsible>
                     <InputGroup style={{ marginBottom: 10 }}>
-                        <Input placeholder="Buscar dispositivo"/>
+                        <Input placeholder="Buscar dispositivo" />
                         <InputGroup.Addon><Icon icon="search" /></InputGroup.Addon>
                     </InputGroup>
                     <List size="sm" bordered style={{ marginBottom: 10 }}>
