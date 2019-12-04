@@ -25,10 +25,21 @@ const getContainer = (index) => {
     if (index === '8') return mobiles_8
     if (index === '9') return mobiles_9
 }
-
+const clearContainer = () => {
+    mobiles_0.clear()
+    mobiles_1.clear()
+    mobiles_2.clear()
+    mobiles_3.clear()
+    mobiles_4.clear()
+    mobiles_5.clear()
+    mobiles_6.clear()
+    mobiles_7.clear()
+    mobiles_8.clear()
+    mobiles_9.clear()
+}
 const ServerTCP = (serverPort, serverHost) => {
 
-    server = createServer((socketIn) => {
+    const server = createServer((socketIn) => {
         socketIn.on('data', (data) => {
             const { mobileID } = PDU(data)
             if (mobileID) {
@@ -42,8 +53,29 @@ const ServerTCP = (serverPort, serverHost) => {
             }
 
         })
+        socketIn.on('close', () => {
+            const mobileID = socketIn['mobileID'] ? socketIn['mobileID'] : false
+            const container = mobileID && getContainer(mobileID[mobileID.length - 1])
+            if (container && container.has(mobileID)) container.delete(mobileID)
+        });
+        socketIn.on('error', (socketError) => {
+            console.log('Connection %s error', socketIn['mobileID']);
+            console.log(socketError)
+        });
     })
-
+    server.on('close', () => {
+        clearContainer()
+    })
+    server.on('error', (serverError) => {
+        if (serverError.code === 'EADDRINUSE') {
+            setTimeout(() => {
+                server.close();
+                server.listen(serverPort, serverHost, () => {
+                    console.log(`ServerTCP ReUp on port ${serverPort}`)
+                });
+            }, 1000);
+        }
+    })
     server.listen(serverPort, serverHost, () => {
         console.log(`ServerTCP Up on port ${serverPort}`)
     });
