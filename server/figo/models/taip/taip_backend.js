@@ -1,5 +1,6 @@
 import { createServer } from 'net'
-import { _ } from 'meteor/underscore'
+import { rstream } from '../../../../imports/api/streamers'
+// import { _ } from 'meteor/underscore'
 
 // contenedores
 const mobiles_0 = new Map()
@@ -37,6 +38,22 @@ const clearContainer = () => {
     mobiles_8.clear()
     mobiles_9.clear()
 }
+const getAllContainers = () => {
+    const allContainers = new Map([...mobiles_0,
+    ...mobiles_1,
+    ...mobiles_2,
+    ...mobiles_3,
+    ...mobiles_4,
+    ...mobiles_5,
+    ...mobiles_6,
+    ...mobiles_7,
+    ...mobiles_8,
+    ...mobiles_9])
+    return JSON.stringify(Array.from(allContainers.keys()))
+}
+
+
+
 const ServerTCP = (serverPort, serverHost) => {
 
     const server = createServer((socketIn) => {
@@ -49,6 +66,7 @@ const ServerTCP = (serverPort, serverHost) => {
                 else {
                     socketIn['mobileID'] = mobileID
                     container.set(mobileID, socketIn)
+                    rstream.emit('devices', getAllContainers())
                 }
             }
 
@@ -56,7 +74,10 @@ const ServerTCP = (serverPort, serverHost) => {
         socketIn.on('close', () => {
             const mobileID = socketIn['mobileID'] ? socketIn['mobileID'] : false
             const container = mobileID && getContainer(mobileID[mobileID.length - 1])
-            if (container && container.has(mobileID)) container.delete(mobileID)
+            if (container && container.has(mobileID)) {
+                container.delete(mobileID)
+                rstream.emit('devices', getAllContainers())
+            }
         });
         socketIn.on('error', (socketError) => {
             console.log('Connection %s error', socketIn['mobileID']);
@@ -80,8 +101,6 @@ const ServerTCP = (serverPort, serverHost) => {
         console.log(`ServerTCP Up on port ${serverPort}`)
     });
 }
-
-
 
 const PDU = (raw) => {
 
