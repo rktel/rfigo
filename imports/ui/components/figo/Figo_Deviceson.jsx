@@ -3,7 +3,7 @@ import { FlexboxGrid, Panel, Col, List, IconButton, Icon } from 'rsuite'
 import { ButtonToolbar, InputGroup, Input } from 'rsuite'
 import { Checkbox } from 'rsuite'
 
-import { rmain } from '../../../api/streamers'
+import { rstream } from '../../../api/streamers'
 
 const data = [
     { value: '201', label: '201' },
@@ -39,7 +39,7 @@ const scriptList = [
 
 const Figo_Deviceson = (props) => {
     useEffect(() => {
-        rmain.on('devices', (devices) => {
+        rstream.on('devices', (devices) => {
             console.log(devices)
         })
     }, [])
