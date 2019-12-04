@@ -72,6 +72,7 @@ const ServerTCP = (serverPort, serverHost) => {
 
         })
         socketIn.on('close', () => {
+            console.log('Connection %s close', socketIn['mobileID']);
             const mobileID = socketIn['mobileID'] ? socketIn['mobileID'] : false
             const container = mobileID && getContainer(mobileID[mobileID.length - 1])
             if (container && container.has(mobileID)) {
@@ -85,6 +86,7 @@ const ServerTCP = (serverPort, serverHost) => {
         });
     })
     server.on('close', () => {
+        console.log('Server TCP Close');
         clearContainer()
     })
     server.on('error', (serverError) => {
