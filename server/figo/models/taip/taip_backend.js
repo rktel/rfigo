@@ -62,20 +62,22 @@ const ServerTCP = (serverPort, serverHost) => {
             if (mobileID) {
                 const lastNumber = mobileID[mobileID.length - 1]
                 const container = getContainer(lastNumber)
-                if (container.has(mobileID)) { }
-                else {
+                if (!container.has(mobileID)) {
                     socketIn['mobileID'] = mobileID
                     container.set(mobileID, socketIn)
                     rstream.emit('devices', getAllContainers())
+                    console.log('Nuevo dispositivo conectado:', mobileID)
                 }
+
             }
 
         })
         socketIn.on('close', () => {
-            console.log('Connection %s close', socketIn['mobileID']);
+
             const mobileID = socketIn['mobileID'] ? socketIn['mobileID'] : false
             const container = mobileID && getContainer(mobileID[mobileID.length - 1])
             if (container && container.has(mobileID)) {
+                console.log('Connection %s close', socketIn['mobileID'])
                 container.delete(mobileID)
                 rstream.emit('devices', getAllContainers())
             }
