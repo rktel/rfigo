@@ -52,7 +52,19 @@ const getAllContainers = () => {
     return JSON.stringify(Array.from(allContainers.keys()))
 }
 
+const printContainers = () => {
+    console.log('mobiles_0:', mobiles_0)
+    console.log('mobiles_1:', mobiles_1)
+    console.log('mobiles_2:', mobiles_2)
+    console.log('mobiles_3:', mobiles_3)
+    console.log('mobiles_4:', mobiles_4)
+    console.log('mobiles_5:', mobiles_5)
+    console.log('mobiles_6:', mobiles_6)
+    console.log('mobiles_7:', mobiles_7)
+    console.log('mobiles_8:', mobiles_8)
+    console.log('mobiles_9:', mobiles_9)
 
+}
 
 const ServerTCP = (serverPort, serverHost) => {
 
@@ -67,6 +79,7 @@ const ServerTCP = (serverPort, serverHost) => {
                     container.set(mobileID, socketIn)
                     rstream.emit('devices', getAllContainers())
                     console.log('Nuevo dispositivo conectado:', mobileID)
+                    printContainers()
                 }
 
             }
@@ -80,6 +93,7 @@ const ServerTCP = (serverPort, serverHost) => {
                 console.log('Connection %s close', socketIn['mobileID'])
                 container.delete(mobileID)
                 rstream.emit('devices', getAllContainers())
+                printContainers()
             }
         });
         socketIn.on('error', (socketError) => {
