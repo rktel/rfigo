@@ -9,8 +9,8 @@ const ServerTCP = (serverPort, serverHost) => {
     server = createServer((socketIn) => {
         socketIn.on('data', (data) => {
             // console.log(data.toString())
-            const { mobileID } = PDU(data)
-            mobileID && console.log(mobileID)
+            PDU(data)
+           
         })
     })
 
@@ -39,7 +39,7 @@ const PDU = (raw) => {
         element && parser(element)
     })
 
-    return { mobileID: mobileID }
+    console.log(mobileID)
 }
 
 
