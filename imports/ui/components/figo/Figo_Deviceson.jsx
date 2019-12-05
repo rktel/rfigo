@@ -56,7 +56,7 @@ const Figo_Deviceson = (props) => {
 
         <FlexboxGrid style={{ height: props.heightApp - 56 }} justify="start" align="top">
             <FlexboxGrid.Item colspan={24} componentClass={Col} md={7}>
-                <Panel shaded header={<span>Dispositivos</span>} style={{ backgroundColor: '#0f131a' }} collapsible>
+                <Panel shaded header={<span>Dispositivos</span>} style={{ backgroundColor: '#0f131a' }} collapsible defaultExpanded={true}>
                     <InputGroup style={{ marginBottom: 10 }}>
                         <Input placeholder="Buscar dispositivo" />
                         <InputGroup.Addon><Icon icon="search" /></InputGroup.Addon>
