@@ -40,7 +40,7 @@ const scriptList = [
 const Figo_Deviceson = (props) => {
     useEffect(() => {
         rstream.on('devices', (devices) => {
-            console.log(devices.length)
+            console.log(devices)
         })
     }, [])
     const ActionButtonGroup = () => (
