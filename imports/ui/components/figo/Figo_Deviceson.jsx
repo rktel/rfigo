@@ -52,6 +52,8 @@ const Figo_Deviceson = (props) => {
             <IconButton icon={<Icon icon="file-text" />} color="red" circle size="sm" />
         </ButtonToolbar>
     )
+    const DeviceOnIcon = () => <Icon icon="btn-on" size="lg" style={{ color: 'green' }} />
+    const DeviceOffIcon = () => <Icon icon="btn-off" size="lg" style={{ color: 'red' }} />
     return (
 
         <FlexboxGrid style={{ height: props.heightApp - 56 }} justify="start" align="top">
@@ -72,7 +74,7 @@ const Figo_Deviceson = (props) => {
                     <List hover style={{ height: props.heightApp - 200 }} size="sm" bordered>
                         {devices.map((item, index) =>
                             <List.Item key={index} index={index}>
-                                <Checkbox> {item.mobileID} - {item.status === 'on' ? <Icon icon="btn-on" size="lg" style={{color: 'green'}}/> : <Icon icon="btn-off" size="lg" style={{color: 'red'}}/>} </Checkbox>
+                                <Checkbox> {item.status === 'on' ? <DeviceOnIcon /> : <DeviceOffIcon />} {item.mobileID} </Checkbox>
                             </List.Item>
                         )}
                     </List>
