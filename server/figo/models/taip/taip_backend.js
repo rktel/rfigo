@@ -49,7 +49,7 @@ const getAllContainers = () => {
     ...mobiles_7,
     ...mobiles_8,
     ...mobiles_9])
-    return Array.from(allContainers.keys())
+    return Array.from(allContainers)
 }
 
 const printContainers = () => {
