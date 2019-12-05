@@ -53,16 +53,16 @@ const getAllContainers = () => {
 }
 
 const printContainers = () => {
-    console.log('mobiles_0:', mobiles_0)
-    console.log('mobiles_1:', mobiles_1)
-    console.log('mobiles_2:', mobiles_2)
-    console.log('mobiles_3:', mobiles_3)
-    console.log('mobiles_4:', mobiles_4)
-    console.log('mobiles_5:', mobiles_5)
-    console.log('mobiles_6:', mobiles_6)
-    console.log('mobiles_7:', mobiles_7)
-    console.log('mobiles_8:', mobiles_8)
-    console.log('mobiles_9:', mobiles_9)
+    console.log('mobiles_0:', mobiles_0.size)
+    console.log('mobiles_1:', mobiles_1.size)
+    console.log('mobiles_2:', mobiles_2.size)
+    console.log('mobiles_3:', mobiles_3.size)
+    console.log('mobiles_4:', mobiles_4.size)
+    console.log('mobiles_5:', mobiles_5.size)
+    console.log('mobiles_6:', mobiles_6.size)
+    console.log('mobiles_7:', mobiles_7.size)
+    console.log('mobiles_8:', mobiles_8.size)
+    console.log('mobiles_9:', mobiles_9.size)
 
 }
 
