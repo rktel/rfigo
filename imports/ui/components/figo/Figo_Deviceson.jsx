@@ -54,25 +54,31 @@ const Figo_Deviceson = (props) => {
     )
     const DeviceOnIcon = () => <Icon icon="btn-on" size="lg" style={{ color: 'green' }} />
     const DeviceOffIcon = () => <Icon icon="btn-off" size="lg" style={{ color: 'red' }} />
+    const [searchDeviceInput, setSearchDeviceInput] = useState('')
+    const [devicesFilters, setDevicesFilters] = useState([])
+    const onChangeSearchDeviceInput = (auxSearchDeviceInput) => {
+        setSearchDeviceInput(auxSearchDeviceInput)
+        setDevicesFilters(devices.filter(el => el.name.includes(input) ))
+        
+    }
     return (
 
         <FlexboxGrid style={{ height: props.heightApp - 56 }} justify="start" align="top">
             <FlexboxGrid.Item colspan={24} componentClass={Col} md={7}>
                 <Panel shaded header={<span>Dispositivos</span>} style={{ backgroundColor: '#0f131a' }} collapsible defaultExpanded={true}>
                     <InputGroup style={{ marginBottom: 10 }}>
-                        <Input placeholder="Buscar dispositivo" />
+                        <Input placeholder="Buscar dispositivo" value={searchDeviceInput} onChange={onChangeSearchDeviceInput}/>
                         <InputGroup.Addon><Icon icon="search" /></InputGroup.Addon>
                     </InputGroup>
                     <List size="sm" bordered style={{ marginBottom: 10 }}>
                         <List.Item>
                             <FlexboxGrid justify="space-between">
-                                <FlexboxGrid.Item><Checkbox> All </Checkbox></FlexboxGrid.Item>
                                 <FlexboxGrid.Item><ActionButtonGroup /></FlexboxGrid.Item>
                             </FlexboxGrid>
                         </List.Item>
                     </List>
                     <List hover style={{ height: props.heightApp - 200 }} size="sm" bordered>
-                        {devices.map((item, index) =>
+                        {devicesFilters.map((item, index) =>
                             <List.Item key={index} index={index}>
                                 <Checkbox> {item.status === 'on' ? <DeviceOnIcon /> : <DeviceOffIcon />} {item.mobileID} </Checkbox>
                             </List.Item>
