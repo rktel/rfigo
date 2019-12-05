@@ -73,6 +73,7 @@ const Figo_Deviceson = (props) => {
                         {devices.map((item, index) =>
                             <List.Item key={index} index={index}>
                                 <Checkbox> {item.mobileID} </Checkbox>
+                                <span>{item.status}</span>
                             </List.Item>
                         )}
                     </List>
