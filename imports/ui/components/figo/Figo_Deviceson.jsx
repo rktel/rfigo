@@ -72,8 +72,7 @@ const Figo_Deviceson = (props) => {
                     <List hover style={{ height: props.heightApp - 200 }} size="sm" bordered>
                         {devices.map((item, index) =>
                             <List.Item key={index} index={index}>
-                                <Checkbox> {item.mobileID} </Checkbox>
-                                <span>{item.status}</span>
+                                <Checkbox> {item.mobileID} - {item.status} </Checkbox>
                             </List.Item>
                         )}
                     </List>
