@@ -57,7 +57,7 @@ const Figo_Deviceson = (props) => {
     const [searchDeviceInput, setSearchDeviceInput] = useState('')
     const onChangeSearchDeviceInput = (auxSearchDeviceInput) => setSearchDeviceInput(auxSearchDeviceInput)
     const DevicesList = () => devices
-        .filter(el => searchDeviceInput === '' || el.includes(searchDeviceInput))
+        .filter(el => searchDeviceInput === '' || el.mobileID.includes(searchDeviceInput))
         .map((item, index) =>
             <List.Item key={index} index={index}>
                 <Checkbox> {item.status === 'on' ? <DeviceOnIcon /> : <DeviceOffIcon />} {item.mobileID} </Checkbox>
