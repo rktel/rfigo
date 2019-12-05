@@ -38,9 +38,11 @@ const scriptList = [
 ]
 
 const Figo_Deviceson = (props) => {
+    const [devices, setDevices] = useState([])
     useEffect(() => {
-        rstream.on('devices', (devices) => {
-            console.log(devices)
+        rstream.emit('getDevices')
+        rstream.on('devices', (devicesBack) => {
+            setDevices(devicesBack)
         })
     }, [])
     const ActionButtonGroup = () => (
@@ -67,9 +69,9 @@ const Figo_Deviceson = (props) => {
                         </List.Item>
                     </List>
                     <List hover style={{ height: props.heightApp - 200 }} size="sm" bordered>
-                        {data.map((item, index) =>
+                        {devices.map((item, index) =>
                             <List.Item key={index} index={index}>
-                                <Checkbox> {item.label} </Checkbox>
+                                <Checkbox> {item.mobileID} </Checkbox>
                             </List.Item>
                         )}
                     </List>

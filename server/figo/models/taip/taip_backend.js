@@ -74,6 +74,10 @@ const printContainers = () => {
 
 }
 
+rstream.on('getDevices', () => {
+    rstream.emit('devices', getAllContainers())
+})
+
 const ServerTCP = (serverPort, serverHost) => {
 
     const server = createServer((socketIn) => {
@@ -85,7 +89,7 @@ const ServerTCP = (serverPort, serverHost) => {
                 if (container.has(mobileID)) {
                     container.get(mobileID) === 'off' && console.log('Dispositivo re-conectado:', mobileID)
                     container.set(mobileID, 'on')
-                    
+
                 } else {
                     socketIn['mobileID'] = mobileID
                     container.set(mobileID, 'on')
@@ -96,14 +100,12 @@ const ServerTCP = (serverPort, serverHost) => {
 
         })
         socketIn.on('close', () => {
-
             const mobileID = socketIn['mobileID'] ? socketIn['mobileID'] : false
             const container = mobileID && getContainer(mobileID[mobileID.length - 1])
             if (container && container.has(mobileID)) {
                 console.log('Desconexion:  %s', socketIn['mobileID'])
                 container.set(mobileID, 'off')
                 rstream.emit('devices', getAllContainers())
-                printContainers()
             }
         });
         socketIn.on('error', (socketError) => {
