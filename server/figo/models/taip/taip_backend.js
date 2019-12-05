@@ -49,7 +49,15 @@ const getAllContainers = () => {
     ...mobiles_7,
     ...mobiles_8,
     ...mobiles_9])
-    return Array.from(allContainers)
+    const allContainersArray = Array.from(allContainers)
+
+    const allContainersArrayObject = allContainersArray.map(item => {
+        return {
+            mobileId: item[0],
+            status: item[1]
+        }
+    })
+    return allContainersArrayObject
 }
 
 const printContainers = () => {
