@@ -42,7 +42,7 @@ const Figo_Deviceson = (props) => {
     useEffect(() => {
         rstream.emit('getDevices')
         rstream.on('devices', (devicesBack) => {
-            console.log(devicesBack)
+            // console.log(devicesBack)
             setDevices(devicesBack)
         })
     }, [])

@@ -53,7 +53,7 @@ const getAllContainers = () => {
 
     const allContainersArrayObject = allContainersArray.map(item => {
         return {
-            mobileId: item[0],
+            mobileID: item[0],
             status: item[1]
         }
     })
