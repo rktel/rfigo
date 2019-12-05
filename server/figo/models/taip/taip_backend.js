@@ -83,8 +83,9 @@ const ServerTCP = (serverPort, serverHost) => {
                 const lastNumber = mobileID[mobileID.length - 1]
                 const container = getContainer(lastNumber)
                 if (container.has(mobileID)) {
+                    container.get(mobileID) === 'off' && console.log('Dispositivo re-conectado:', mobileID)
                     container.set(mobileID, 'on')
-                    console.log('Dispositivo re-conectado:', mobileID)
+                    
                 } else {
                     socketIn['mobileID'] = mobileID
                     container.set(mobileID, 'on')
