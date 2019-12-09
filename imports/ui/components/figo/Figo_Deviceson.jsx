@@ -11,8 +11,7 @@ const ActionButtonGroup = () => (
         <IconButton icon={<Icon icon="file-text" />} color="red" circle size="sm" />
     </ButtonToolbar>
 )
-const DeviceOnIcon = () => <Icon icon="btn-on" size="lg" style={{ color: 'green' }} />
-const DeviceOffIcon = () => <Icon icon="btn-off" size="lg" style={{ color: 'red' }} />
+
 
 
 const Figo_Deviceson = (props) => {
@@ -40,7 +39,7 @@ const Figo_Deviceson = (props) => {
                         onChange={onChangeCheckPickerDevices}
                         data={devices}
                         groupBy="role"
-                        style={{ width: 300 }}
+                        style={{ width: 224 }}
                         placeholder="Lista de dispositivos"
                         renderMenuItem={(label, item) => {
                             return (
@@ -82,3 +81,4 @@ const Figo_Deviceson = (props) => {
 }
 
 export default Figo_Deviceson
+
