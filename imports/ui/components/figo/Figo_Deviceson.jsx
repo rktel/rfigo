@@ -39,20 +39,20 @@ const Figo_Deviceson = (props) => {
                         value={checkPickerValueDevices}
                         onChange={onChangeCheckPickerDevices}
                         data={devices}
-                        groupBy="role"
-                        block
+ 
+                        style={{ width: 300 }}
                         placeholder="Lista de dispositivos"
                         renderMenuItem={(label, item) => {
                             return (
                               <div>
-                                <i className="rs-icon rs-icon-user" /> {label}
+                                <i className="rs-icon rs-icon-microchip" /> {label}
                               </div>
                             );
                           }}
                           renderMenuGroup={(label, item) => {
                             return (
                               <div>
-                                <i className="rs-icon rs-icon-group" /> {label} - ({
+                                <i className="rs-icon rs-icon-object-group" /> {label} - ({
                                   item.children.length
                                 })
                               </div>
@@ -62,9 +62,9 @@ const Figo_Deviceson = (props) => {
                             return (
                               <span>
                                 <span style={{ color: '#575757' }}>
-                                  <i className="rs-icon rs-icon-user" /> Users :
+                                  <i className="rs-icon rs-icon-microchip" /> :
                                 </span>{' '}
-                                {value.join(' * ')}
+                                {value.join(' , ')}
                               </span>
                             );
                           }}
