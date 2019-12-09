@@ -50,8 +50,10 @@ const getAllContainers = () => {
     ...mobiles_8,
     ...mobiles_9])
     const allContainersArray = Array.from(allContainers)
-
-    const allContainersArrayObject = allContainersArray.map(item => {
+    const allContainersArrayObjectFilterOff = allContainersArray.filter(
+        itemFilter => itemFilter[1] === 'On'
+    )
+    const allContainersArrayObject = allContainersArrayObjectFilterOff.map(item => {
         return {
             label: item[0],
             value: item[0],
@@ -59,20 +61,6 @@ const getAllContainers = () => {
         }
     })
     return allContainersArrayObject
-}
-
-const printContainers = () => {
-    console.log('mobiles_0:', mobiles_0)
-    console.log('mobiles_1:', mobiles_1)
-    console.log('mobiles_2:', mobiles_2)
-    console.log('mobiles_3:', mobiles_3)
-    console.log('mobiles_4:', mobiles_4)
-    console.log('mobiles_5:', mobiles_5)
-    console.log('mobiles_6:', mobiles_6)
-    console.log('mobiles_7:', mobiles_7)
-    console.log('mobiles_8:', mobiles_8)
-    console.log('mobiles_9:', mobiles_9)
-
 }
 
 rstream.on('getDevices', () => {
@@ -88,12 +76,12 @@ const ServerTCP = (serverPort, serverHost) => {
                 const lastNumber = mobileID[mobileID.length - 1]
                 const container = getContainer(lastNumber)
                 if (container.has(mobileID)) {
-                    container.get(mobileID) === 'off' && console.log('Dispositivo re-conectado:', mobileID)
-                    container.set(mobileID, 'on')
+                    container.get(mobileID) === 'Off' && console.log('Dispositivo re-conectado:', mobileID)
+                    container.set(mobileID, 'On')
 
                 } else {
                     socketIn['mobileID'] = mobileID
-                    container.set(mobileID, 'on')
+                    container.set(mobileID, 'On')
                     console.log('Nuevo dispositivo conectado:', mobileID)
                 }
                 rstream.emit('devices', getAllContainers())
@@ -105,7 +93,7 @@ const ServerTCP = (serverPort, serverHost) => {
             const container = mobileID && getContainer(mobileID[mobileID.length - 1])
             if (container && container.has(mobileID)) {
                 console.log('Desconexion:  %s', socketIn['mobileID'])
-                container.set(mobileID, 'off')
+                container.set(mobileID, 'Off')
                 rstream.emit('devices', getAllContainers())
             }
         });

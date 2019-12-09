@@ -39,7 +39,7 @@ const Figo_Deviceson = (props) => {
                         value={checkPickerValueDevices}
                         onChange={onChangeCheckPickerDevices}
                         data={devices}
- 
+                        groupBy="role"
                         style={{ width: 300 }}
                         placeholder="Lista de dispositivos"
                         renderMenuItem={(label, item) => {
@@ -62,7 +62,7 @@ const Figo_Deviceson = (props) => {
                             return (
                               <span>
                                 <span style={{ color: '#575757' }}>
-                                  <i className="rs-icon rs-icon-microchip" /> :
+                                  {items.length}{' '}<i className="rs-icon rs-icon-microchip" /> :
                                 </span>{' '}
                                 {value.join(' , ')}
                               </span>
