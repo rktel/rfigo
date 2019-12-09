@@ -5,20 +5,8 @@ import { Tooltip, Whisper } from 'rsuite'
 
 import { rstream } from '../../../api/streamers'
 
-const ActionButtonGroup = () => (
-    <ButtonToolbar>
-        <Whisper placement="right" trigger="hover" speaker={<Tooltip>Enviar Mensaje</Tooltip>}>
-            <IconButton icon={<Icon icon="comment" />} color="blue" circle size="sm" />
-        </Whisper>
-        <Whisper placement="right" trigger="hover" speaker={<Tooltip>Enviar Script</Tooltip>}>
-            <IconButton icon={<Icon icon="file-text" />} color="red" circle size="sm" />
-        </Whisper>
-    </ButtonToolbar>
-)
-
-
-
 const Figo_Deviceson = (props) => {
+
     const [devices, setDevices] = useState([])
     useEffect(() => {
         rstream.emit('getDevices')
@@ -31,7 +19,27 @@ const Figo_Deviceson = (props) => {
     const onChangeCheckPickerDevices = (deviceValue) => {
         setCheckPickerValueDevices(deviceValue)
     }
-
+    /* ActionButtonGroup */
+    const onClickSendMessage = () => {
+        alert(checkPickerValueDevices.toString())
+    }
+    const onClickSendScript = () => {
+        alert(checkPickerValueDevices.toString())
+    }
+    const ActionButtonGroup = () => (
+        <ButtonToolbar>
+            <Whisper placement="right" trigger="hover" speaker={<Tooltip>Enviar Mensaje</Tooltip>}>
+                <IconButton icon={<Icon icon="comment" />} color="blue" circle size="sm"
+                    onClick={onClickSendMessage}
+                />
+            </Whisper>
+            <Whisper placement="right" trigger="hover" speaker={<Tooltip>Enviar Script</Tooltip>}>
+                <IconButton icon={<Icon icon="file-text" />} color="red" circle size="sm"
+                    onClick={onClickSendScript}
+                />
+            </Whisper>
+        </ButtonToolbar>
+    )
 
     return (
 
