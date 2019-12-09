@@ -99,8 +99,8 @@ const Figo_Deviceson = (props) => {
                 </Panel>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={24} componentClass={Col} md={15}>
-                {showActionPanel==='1' && <h1>Message</h1>}
-                {showActionPanel==='2' && <h1>Script</h1>}
+                {showActionPanel===1 && <h1>Message</h1>}
+                {showActionPanel===2 && <h1>Script</h1>}
             </FlexboxGrid.Item>
         </FlexboxGrid>
 
