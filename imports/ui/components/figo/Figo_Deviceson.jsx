@@ -45,7 +45,16 @@ const Figo_Deviceson = (props) => {
                 Script</IconButton>
         </ButtonToolbar>
     )
-
+    const MessageDevices = () => {
+        return (
+            <ul style={{backgroundColor: 'peru', height: '100%'}}>
+                {checkPickerValueDevices.map(device => (
+                    <li>{device}</li>
+                ))}
+            </ul>
+        )
+    }
+    const ScriptDevices = () => { }
     return (
 
         <FlexboxGrid style={{ height: props.heightApp - 56 }} justify="start" align="top">
@@ -74,7 +83,7 @@ const Figo_Deviceson = (props) => {
                                             <i className="rs-icon rs-icon-object-group" /> {label} - ({
                                                 item.children.length
                                             })
-                              </div>
+                                        </div>
                                     );
                                 }}
                                 renderValue={(value, items) => {
@@ -95,12 +104,11 @@ const Figo_Deviceson = (props) => {
                         </FormGroup>
                     </Form>
 
-
                 </Panel>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={24} componentClass={Col} md={15}>
-                {showActionPanel===1 && <h1>Message</h1>}
-                {showActionPanel===2 && <h1>Script</h1>}
+                {showActionPanel === 1 && <h1>Message</h1>}
+                {showActionPanel === 2 && <h1>Script</h1>}
             </FlexboxGrid.Item>
         </FlexboxGrid>
 
