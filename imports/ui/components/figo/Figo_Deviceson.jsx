@@ -20,22 +20,26 @@ const Figo_Deviceson = (props) => {
         setCheckPickerValueDevices(deviceValue)
     }
     /* ActionButtonGroup */
-    const onClickSendMessage = () => {
+    const onClickOpenMessage = () => {
+        if (checkPickerValueDevices.length > 0) {
 
+        }
     }
-    const onClickSendScript = () => {
+    const onClickOpenScript = () => {
+        if (checkPickerValueDevices.length > 0) {
 
+        }
     }
     const ActionButtonGroup = () => (
         <ButtonToolbar>
 
             <IconButton icon={<Icon icon="comment" />} color="blue" size="sm"
-                onClick={onClickSendMessage}
+                onClick={onClickOpenMessage}
             >
                 Mensaje</IconButton>
 
-            <IconButton icon={<Icon icon="file-text" />} color="red" size="sm"
-                onClick={onClickSendScript}
+            <IconButton icon={<Icon icon="file-text" />} color="violet" size="sm"
+                onClick={onClickOpenScript}
             >
                 Script</IconButton>
         </ButtonToolbar>
@@ -43,7 +47,7 @@ const Figo_Deviceson = (props) => {
 
     return (
 
-        <FlexboxGrid style={{ height: props.heightApp - 56 }} justify="start" align="top">
+        <FlexboxGrid style={{ height: props.heightApp - 56 }} justify="start" align="middle">
             <FlexboxGrid.Item colspan={24} componentClass={Col} md={7}>
                 <Panel shaded header={<span>Dispositivos</span>} style={{ backgroundColor: '#0f131a' }} collapsible defaultExpanded={true}>
                     <Form>
