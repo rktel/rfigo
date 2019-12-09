@@ -7,10 +7,10 @@ import { rstream } from '../../../api/streamers'
 
 const ActionButtonGroup = () => (
     <ButtonToolbar>
-        <Whisper placement="right" trigger="hover" speaker={()=><Tooltip>Enviar Mensaje</Tooltip>}>
+        <Whisper placement="right" trigger="hover" speaker={<Tooltip>Enviar Mensaje</Tooltip>}>
             <IconButton icon={<Icon icon="comment" />} color="blue" circle size="sm" />
         </Whisper>
-        <Whisper placement="right" trigger="hover" speaker={()=><Tooltip>Enviar Script</Tooltip>}>
+        <Whisper placement="right" trigger="hover" speaker={<Tooltip>Enviar Script</Tooltip>}>
             <IconButton icon={<Icon icon="file-text" />} color="red" circle size="sm" />
         </Whisper>
     </ButtonToolbar>
