@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { FlexboxGrid, Panel, Col, IconButton, Icon } from 'rsuite'
 import { ButtonToolbar, CheckPicker, Form, FormGroup, ControlLabel } from 'rsuite'
-
+import { Tooltip, Whisper } from 'rsuite'
 
 import { rstream } from '../../../api/streamers'
 
 const ActionButtonGroup = () => (
     <ButtonToolbar>
-        <IconButton icon={<Icon icon="comment" />} color="blue" circle size="sm" />
-        <IconButton icon={<Icon icon="file-text" />} color="red" circle size="sm" />
+        <Whisper placement="right" trigger="hover" speaker={()=><Tooltip>Enviar Mensaje</Tooltip>}>
+            <IconButton icon={<Icon icon="comment" />} color="blue" circle size="sm" />
+        </Whisper>
+        <Whisper placement="right" trigger="hover" speaker={()=><Tooltip>Enviar Script</Tooltip>}>
+            <IconButton icon={<Icon icon="file-text" />} color="red" circle size="sm" />
+        </Whisper>
     </ButtonToolbar>
 )
 
