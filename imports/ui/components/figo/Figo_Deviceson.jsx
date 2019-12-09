@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { FlexboxGrid, Panel, Col, IconButton, Icon } from 'rsuite'
 import { ButtonToolbar, CheckPicker, Form, FormGroup, ControlLabel } from 'rsuite'
-import { Tooltip, Whisper } from 'rsuite'
 
 import { rstream } from '../../../api/streamers'
 
@@ -20,14 +19,16 @@ const Figo_Deviceson = (props) => {
         setCheckPickerValueDevices(deviceValue)
     }
     /* ActionButtonGroup */
+    const [showActionPanel, setShowActionPanel] = useState(0)
+
     const onClickOpenMessage = () => {
         if (checkPickerValueDevices.length > 0) {
-
+            setShowActionPanel(1)
         }
     }
     const onClickOpenScript = () => {
         if (checkPickerValueDevices.length > 0) {
-
+            setShowActionPanel(2)
         }
     }
     const ActionButtonGroup = () => (
@@ -47,7 +48,7 @@ const Figo_Deviceson = (props) => {
 
     return (
 
-        <FlexboxGrid style={{ height: props.heightApp - 56 }} justify="start" align="middle">
+        <FlexboxGrid style={{ height: props.heightApp - 56 }} justify="start" align="top">
             <FlexboxGrid.Item colspan={24} componentClass={Col} md={7}>
                 <Panel shaded header={<span>Dispositivos</span>} style={{ backgroundColor: '#0f131a' }} collapsible defaultExpanded={true}>
                     <Form>
@@ -98,7 +99,8 @@ const Figo_Deviceson = (props) => {
                 </Panel>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={24} componentClass={Col} md={15}>
-                B
+                {showActionPanel==='1' && <h1>Message</h1>}
+                {showActionPanel==='2' && <h1>Script</h1>}
             </FlexboxGrid.Item>
         </FlexboxGrid>
 
