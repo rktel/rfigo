@@ -39,6 +39,8 @@ const Figo_Deviceson = (props) => {
                         value={checkPickerValueDevices}
                         onChange={onChangeCheckPickerDevices}
                         data={devices}
+                        groupBy="role"
+                        style={{ width: 224 }} 
                     />
 
 
