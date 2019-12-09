@@ -53,8 +53,9 @@ const getAllContainers = () => {
 
     const allContainersArrayObject = allContainersArray.map(item => {
         return {
-            mobileID: item[0],
-            status: item[1]
+            label: item[0],
+            value: item[0],
+            role: item[1]
         }
     })
     return allContainersArrayObject
@@ -109,8 +110,8 @@ const ServerTCP = (serverPort, serverHost) => {
             }
         });
         socketIn.on('error', (socketError) => {
-            console.log('Error de conexion: %s ', socketIn['mobileID']);
-            console.log(socketError)
+            //console.log('Error de conexion: %s ', socketIn['mobileID']);
+            //console.log(socketError)
         });
     })
     server.on('close', () => {
