@@ -39,37 +39,37 @@ const Figo_Deviceson = (props) => {
                         onChange={onChangeCheckPickerDevices}
                         data={devices}
                         groupBy="role"
-                        style={{ width: 224 }}
+                        style={{ width: 258 }}
                         placeholder="Lista de dispositivos"
                         renderMenuItem={(label, item) => {
                             return (
-                              <div>
-                                <i className="rs-icon rs-icon-microchip" /> {label}
+                                <div>
+                                    <i className="rs-icon rs-icon-microchip" /> {label}
+                                </div>
+                            );
+                        }}
+                        renderMenuGroup={(label, item) => {
+                            return (
+                                <div>
+                                    <i className="rs-icon rs-icon-object-group" /> {label} - ({
+                                        item.children.length
+                                    })
                               </div>
                             );
-                          }}
-                          renderMenuGroup={(label, item) => {
+                        }}
+                        renderValue={(value, items) => {
                             return (
-                              <div>
-                                <i className="rs-icon rs-icon-object-group" /> {label} - ({
-                                  item.children.length
-                                })
-                              </div>
-                            );
-                          }}
-                          renderValue={(value, items) => {
-                            return (
-                              <span>
-                                <span style={{ color: '#575757' }}>
-                                  {items.length}{' '}<i className="rs-icon rs-icon-microchip" /> :
+                                <span>
+                                    <span style={{ color: '#575757' }}>
+                                        {items.length}{' '}<i className="rs-icon rs-icon-microchip" /> :
                                 </span>{' '}
-                                {value.join(' , ')}
-                              </span>
+                                    {value.join(' , ')}
+                                </span>
                             );
-                          }}
+                        }}
                     />
 
-
+                    <ActionButtonGroup />
                 </Panel>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={24} componentClass={Col} md={15}>
