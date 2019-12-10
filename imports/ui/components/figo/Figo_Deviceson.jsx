@@ -44,7 +44,7 @@ const Figo_Deviceson = (props) => {
             onChange={onChangeSelectPickerValueActions}
             data={actionList}
             style={{ width: 258 }}
-            groupBy="role"
+    
             placeholder="Selecciona"
             renderMenuItem={(label, item) => {
                 return (
