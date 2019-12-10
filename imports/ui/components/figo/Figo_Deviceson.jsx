@@ -6,8 +6,8 @@ import { rstream } from '../../../api/streamers'
 
 const Figo_Deviceson = (props) => {
     const actionList = [
-        { label: 'Enviar comando', value: 'comando', id: 1 , role: 'out'},
-        { label: 'Enviar Script', value: 'script', id: 2 , role: 'out'},
+        { label: 'Enviar comando', value: 'comando', id: 1, role: 'out' },
+        { label: 'Enviar Script', value: 'script', id: 2, role: 'out' },
     ]
     const [devices, setDevices] = useState([])
     useEffect(() => {
@@ -34,12 +34,18 @@ const Figo_Deviceson = (props) => {
             setShowActionPanel(2)
         }
     }
+    const [selectPickerValueActions, setSelectPickerValueActions] = useState([])
+    const onChangeSelectPickerValueActions = (actionValue) => {
+        setSelectPickerValueActions(actionValue)
+    }
     const ActionSelectPicker = () => (
         <SelectPicker
+            value={selectPickerValueActions}
+            onChange={onChangeSelectPickerValueActions}
             data={actionList}
             style={{ width: 258 }}
             groupBy="role"
-            placeholder="Select User"
+            placeholder="Selecciona"
             renderMenuItem={(label, item) => {
                 return (
                     <div>
@@ -136,7 +142,7 @@ const Figo_Deviceson = (props) => {
                         </FormGroup>
                         <FormGroup>
                             <ControlLabel>Acciones</ControlLabel>
-                            <ActionSelectPicker/>
+                            <ActionSelectPicker />
                         </FormGroup>
                     </Form>
 
