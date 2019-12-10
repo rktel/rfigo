@@ -6,8 +6,8 @@ import { rstream } from '../../../api/streamers'
 
 const Figo_Deviceson = (props) => {
     const actionList = [
-        { label: 'Enviar comando', value: 'comando', id: 1 },
-        { label: 'Enviar Script', value: 'script', id: 2 },
+        { label: 'Enviar comando', value: 'comando', id: 1 , role: 'out'},
+        { label: 'Enviar Script', value: 'script', id: 2 , role: 'out'},
     ]
     const [devices, setDevices] = useState([])
     useEffect(() => {
