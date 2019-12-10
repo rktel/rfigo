@@ -47,19 +47,21 @@ const Figo_Deviceson = (props) => {
     )
     const MessageDevices = () => {
         return (
-            <ul style={{backgroundColor: 'peru', height: props.heightApp - 56}}>
-                {checkPickerValueDevices.map(device => (
-                    <li>{device}</li>
-                ))}
-            </ul>
+            <Panel style={{ height: props.heightApp }}>
+                <ul style={{ backgroundColor: 'peru' }}>
+                    {checkPickerValueDevices.map(device => (
+                        <li>{device}</li>
+                    ))}
+                </ul>
+            </Panel>
         )
     }
     const ScriptDevices = () => { }
     return (
 
-        <FlexboxGrid style={{ height: props.heightApp - 56 }} justify="space-between" align="top">
+        <FlexboxGrid justify="space-between" align="top">
             <FlexboxGrid.Item colspan={24} componentClass={Col} md={7}>
-                <Panel shaded header={<span>Dispositivos</span>} style={{ backgroundColor: '#0f131a' }} collapsible defaultExpanded={true}>
+                <Panel shaded header={<span>Dispositivos</span>} style={{ backgroundColor: '#0f131a', height: props.heightApp }} collapsible defaultExpanded={true}>
                     <Form>
                         <FormGroup>
                             <ControlLabel>Lista de dispositivos</ControlLabel>
@@ -107,7 +109,7 @@ const Figo_Deviceson = (props) => {
                 </Panel>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={24} componentClass={Col} md={15}>
-                {showActionPanel === 1 && <MessageDevices/>}
+                {showActionPanel === 1 && <MessageDevices />}
                 {showActionPanel === 2 && <h1>Script</h1>}
             </FlexboxGrid.Item>
         </FlexboxGrid>
