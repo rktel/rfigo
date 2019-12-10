@@ -136,7 +136,7 @@ const Figo_Deviceson = (props) => {
                         </FormGroup>
                         <FormGroup>
                             <ControlLabel>Acciones</ControlLabel>
-                            <ActionButtonGroup />
+                            <ActionSelectPicker/>
                         </FormGroup>
                     </Form>
 
