@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { FlexboxGrid, Panel, Col, IconButton, Icon } from 'rsuite'
-import { ButtonToolbar, CheckPicker, Form, FormGroup, ControlLabel } from 'rsuite'
+import { ButtonToolbar, CheckPicker, Form, FormGroup, ControlLabel, SelectPicker } from 'rsuite'
 
 import { rstream } from '../../../api/streamers'
 
 const Figo_Deviceson = (props) => {
-
+    const actionList = [
+        { label: 'Enviar comando', value: 'comando', id: 1 },
+        { label: 'Enviar Script', value: 'script', id: 2 },
+    ]
     const [devices, setDevices] = useState([])
     useEffect(() => {
         rstream.emit('getDevices')
@@ -31,19 +34,38 @@ const Figo_Deviceson = (props) => {
             setShowActionPanel(2)
         }
     }
-    const ActionButtonGroup = () => (
-        <ButtonToolbar>
+    const ActionSelectPicker = () => (
+        <SelectPicker
+            data={actionList}
+            style={{ width: 258 }}
+            groupBy="role"
+            placeholder="Select User"
+            renderMenuItem={(label, item) => {
+                return (
+                    <div>
+                        <i className="rs-icon rs-icon-user" /> {label}
+                    </div>
+                );
+            }}
+            renderMenuGroup={(label, item) => {
+                return (
+                    <div>
+                        <i className="rs-icon rs-icon-group" /> {label} - ({item.children.length})
+            </div>
+                );
+            }}
+            renderValue={(value, item) => {
+                return (
+                    <div>
+                        <span style={{ color: '#575757' }}>
+                            <i className="rs-icon rs-icon-user" /> User :
+              </span>{' '}
+                        {value}
+                    </div>
+                );
+            }}
+        />
 
-            <IconButton icon={<Icon icon="comment" />} color="blue" size="sm"
-                onClick={onClickOpenMessage}
-            >
-                Mensaje</IconButton>
-
-            <IconButton icon={<Icon icon="file-text" />} color="violet" size="sm"
-                onClick={onClickOpenScript}
-            >
-                Script</IconButton>
-        </ButtonToolbar>
     )
     const MessageDevices = () => {
         return (
@@ -65,6 +87,18 @@ const Figo_Deviceson = (props) => {
                     <Form>
                         <FormGroup>
                             <ControlLabel>Lista de dispositivos</ControlLabel>
+                            <ButtonToolbar>
+
+                                <IconButton icon={<Icon icon="comment" />} color="blue" size="sm"
+                                    onClick={onClickOpenMessage}
+                                >
+                                    Mensaje</IconButton>
+
+                                <IconButton icon={<Icon icon="file-text" />} color="violet" size="sm"
+                                    onClick={onClickOpenScript}
+                                >
+                                    Script</IconButton>
+                            </ButtonToolbar>
                             <CheckPicker
                                 value={checkPickerValueDevices}
                                 onChange={onChangeCheckPickerDevices}
