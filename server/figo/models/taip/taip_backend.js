@@ -133,6 +133,10 @@ const DB_DevicesInsert = (mobileID, status) => {
     /** Status: 0 = 'offline', 1 = 'online' */
     Devices.update({ 'mobileID': mobileID }, { $set: { status } }, { upsert: true })
 }
+const DB_DevicesReset = () => {
+    /** Set all to offline */
+    Devices.update({}, { $set: { status: 0 } }, { multi: true })
+}
 /* PDU (Parser) */
 const PDU = (raw) => {
 
@@ -158,5 +162,5 @@ const PDU = (raw) => {
 
 }
 
-
+DB_DevicesReset()
 ServerTCP(7100, '0.0.0.0')
