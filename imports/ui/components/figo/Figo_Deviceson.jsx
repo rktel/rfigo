@@ -31,7 +31,7 @@ const Figo_Deviceson = (props) => {
                 <Panel style={{ backgroundColor: 'gray' }}>
                     <FlexboxGrid>
                         <FlexboxGrid.Item colspan={24}>
-                            <CheckPicker data={devices} value={selectedDevicesCP} onChange={value => setSelectedDevicesCP(value)} block />
+                            <CheckPicker data={devices} value={selectedDevicesCP} onChange={value => setSelectedDevicesCP(value)} />
                         </FlexboxGrid.Item>
                     </FlexboxGrid>
                 </Panel>
