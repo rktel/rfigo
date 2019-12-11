@@ -8,7 +8,7 @@ const Figo_Deviceson = (props) => {
     /* Devices */
     const [devices, setDevices] = useState([])
     useEffect(() => {
-        Meteor.call('getAllDevices', devicesDB => {
+        Meteor.call('getAllDevices', (errorDevicesDB, devicesDB) => {
             console.log(devicesDB)
         })
     }, [])
