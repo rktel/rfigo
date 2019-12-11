@@ -7,9 +7,15 @@ import { rstream } from '../../../api/streamers'
 const Figo_Deviceson = (props) => {
     /* Devices */
     const [devices, setDevices] = useState([])
-    useEffect(() => {
+    const devicesUpdate = () => {
         Meteor.call('getAllDevices', (errorDevicesDB, devicesDB) => {
             console.log(devicesDB)
+        })
+    }
+    useEffect(() => {
+        devicesUpdate()
+        rstream.on('devicesUpdate', () => {
+            devicesUpdate()
         })
     }, [])
     /* Selected devices*/

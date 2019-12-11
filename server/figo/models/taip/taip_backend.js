@@ -129,8 +129,10 @@ const onCloseSocket = (sock) => {
 /* Database */
 const DB_DevicesInsert = (mobileID, status) => {
     /** Status: 0 = 'offline', 1 = 'online' */
-    Devices.update({ 'mobileID': mobileID }, { $set: { status } }, { upsert: true }, (a, b) => {
-        console.log('>>>>>>>>>>a:', a, '>>>>>>>>>>b:', b)
+    Devices.update({ 'mobileID': mobileID }, { $set: { status } }, { upsert: true }, (error, success) => {
+        if (error === null && success === 1) {
+            rstream.emit('devicesUpdate')
+        }
     })
 }
 const DB_DevicesReset = () => {
