@@ -101,7 +101,6 @@ const onDataSocket = (data, sock) => {
             sock['mobileID'] = mobileID
             container.set(mobileID, sock)
             console.log('Conectado:  %s', mobileID)
-            //rstream.emit('devices', getAllContainers())
             DB_DevicesInsert(mobileID, 1)
         } else {
             /**HERE DATA FREQUENCY*/
@@ -123,7 +122,6 @@ const onCloseSocket = (sock) => {
         if (container.has(mobileID)) {
             container.delete(mobileID)
             console.log('Desconectado:  %s', mobileID)
-            //rstream.emit('devices', getAllContainers())
             DB_DevicesInsert(mobileID, 0)
         }
     }
@@ -131,7 +129,9 @@ const onCloseSocket = (sock) => {
 /* Database */
 const DB_DevicesInsert = (mobileID, status) => {
     /** Status: 0 = 'offline', 1 = 'online' */
-    Devices.update({ 'mobileID': mobileID }, { $set: { status } }, { upsert: true })
+    Devices.update({ 'mobileID': mobileID }, { $set: { status } }, { upsert: true }, (a, b) => {
+        console.log('>>>>>>>>>>a:', a, '>>>>>>>>>>b:', b)
+    })
 }
 const DB_DevicesReset = () => {
     /** Set all to offline */
