@@ -102,7 +102,7 @@ const onDataSocket = (data, sock) => {
             container.set(mobileID, sock)
             console.log('Conectado:  %s', mobileID)
             rstream.emit('devices', getAllContainers())
-            DB_DevicesInsert(mobileID, 1)
+            rstream.emit('DB_DevicesInsert', mobileID, 1)
         } else {
             /**HERE DATA FREQUENCY*/
         }
@@ -124,7 +124,7 @@ const onCloseSocket = (sock) => {
             container.delete(mobileID)
             console.log('Desconectado:  %s', mobileID)
             rstream.emit('devices', getAllContainers())
-            DB_DevicesInsert(mobileID, 0)
+            rstream.emit('DB_DevicesInsert', mobileID, 0)
         }
     }
 }
@@ -132,6 +132,10 @@ const DB_DevicesInsert = (mobileID, status) => {
     /** Status: 0 = 'offline', 1 = 'online' */
     Devices.update(mobileID, status, { upsert: true })
 }
+rstream.on('DB_DevicesInsert', (mobileID, status) => {
+    DB_DevicesInsert(mobileID, status)
+})
+
 const PDU = (raw) => {
 
     const parser = (chunkraw) => {
