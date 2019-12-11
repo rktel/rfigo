@@ -49,18 +49,8 @@ const getAllContainers = () => {
     ...mobiles_7,
     ...mobiles_8,
     ...mobiles_9])
-    const allContainersArray = Array.from(allContainers)
-    const allContainersArrayObjectFilterOff = allContainersArray.filter(
-        itemFilter => itemFilter[1] === 'On'
-    )
-    const allContainersArrayObject = allContainersArrayObjectFilterOff.map(item => {
-        return {
-            label: item[0],
-            value: item[0],
-            role: item[1]
-        }
-    })
-    return allContainersArrayObject
+    allContainers = allContainers.keys()
+    return Array.from(allContainers)
 }
 
 rstream.on('getDevices', () => {
@@ -70,36 +60,16 @@ rstream.on('getDevices', () => {
 const ServerTCP = (serverPort, serverHost) => {
 
     const server = createServer((socketIn) => {
-        socketIn.on('data', (data) => {
-            const { mobileID } = PDU(data)
-            if (mobileID) {
-                const lastNumber = mobileID[mobileID.length - 1]
-                const container = getContainer(lastNumber)
-                if (container.has(mobileID)) {
-                    container.get(mobileID) === 'Off' && console.log('Dispositivo re-conectado:', mobileID)
-                    container.set(mobileID, 'On')
 
-                } else {
-                    socketIn['mobileID'] = mobileID
-                    container.set(mobileID, 'On')
-                    console.log('Nuevo dispositivo conectado:', mobileID)
-                }
-                rstream.emit('devices', getAllContainers())
-            }
+        socketIn.on('data', (data) => {
+            onDataSocket(data, socketIn)
 
         })
         socketIn.on('close', () => {
-            const mobileID = socketIn['mobileID'] ? socketIn['mobileID'] : false
-            const container = mobileID && getContainer(mobileID[mobileID.length - 1])
-            if (container && container.has(mobileID)) {
-                console.log('Desconexion:  %s', socketIn['mobileID'])
-                container.set(mobileID, 'Off')
-                rstream.emit('devices', getAllContainers())
-            }
+            onCloseSocket(socketIn)
         });
         socketIn.on('error', (socketError) => {
-            //console.log('Error de conexion: %s ', socketIn['mobileID']);
-            //console.log(socketError)
+            onErrorSocket(socketError, socketIn)
         });
     })
     server.on('close', () => {
@@ -119,6 +89,39 @@ const ServerTCP = (serverPort, serverHost) => {
     server.listen(serverPort, serverHost, () => {
         console.log(`ServerTCP Up on port ${serverPort}`)
     });
+}
+
+const onDataSocket = (data, sock) => {
+    const { mobileID } = PDU(data)
+    if (mobileID) {
+        const indexContainer = mobileID[mobileID.length - 1]
+        const container = getContainer(indexContainer)
+        if (!container.has(mobileID)) {
+            sock['mobileID'] = mobileID
+            container.set(mobileID, sock)
+            console.log('Conectado:  %s', mobileID)
+            rstream.emit('devices', getAllContainers())
+        }
+    }
+}
+const onErrorSocket = (error, sock) => {
+    if (sock['mobileID']) {
+        const mobileID = sock['mobileID']
+        console.log('Error:  %s', mobileID)
+        console.log(error)
+    }
+}
+const onCloseSocket = (sock) => {
+    if (sock['mobileID']) {
+        const mobileID = sock['mobileID']
+        const indexContainer = mobileID[mobileID.length - 1]
+        const container = getContainer(indexContainer)
+        if (container.has(mobileID)) {
+            container.delete(mobileID)
+            console.log('Desconectado:  %s', mobileID)
+            rstream.emit('devices', getAllContainers())
+        }
+    }
 }
 
 const PDU = (raw) => {
