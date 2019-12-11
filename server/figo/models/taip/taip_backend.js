@@ -124,7 +124,7 @@ const onCloseSocket = (sock) => {
             container.delete(mobileID)
             console.log('Desconectado:  %s', mobileID)
             rstream.emit('devices', getAllContainers())
-            rstream.emit('DB_DevicesInsert', mobileID, 0)
+            rstream.emit('hello', mobileID, 0)
         }
     }
 }
@@ -132,7 +132,7 @@ const DB_DevicesInsert = (mobileID, status) => {
     /** Status: 0 = 'offline', 1 = 'online' */
     Devices.update(mobileID, status, { upsert: true })
 }
-rstream.on('DB_DevicesInsert', (mobileID, status) => {
+rstream.on('hello', (mobileID, status) => {
     console.log('DB_DevicesInsert',mobileID, status)
     DB_DevicesInsert(mobileID, status)
 })
