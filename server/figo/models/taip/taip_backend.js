@@ -60,7 +60,7 @@ rstream.on('getDevices', () => {
 
 const ServerTCP = (serverPort, serverHost) => {
 
-    const server = createServer((socketIn) => {
+    const server = createServer(Meteor.bindEnvironment((socketIn) => {
 
         socketIn.on('data', Meteor.bindEnvironment((data) => {
             onDataSocket(data, socketIn)
@@ -71,7 +71,7 @@ const ServerTCP = (serverPort, serverHost) => {
         socketIn.on('error', Meteor.bindEnvironment((socketError) => {
             onErrorSocket(socketError, socketIn)
         }))
-    })
+    }))
     server.on('close', () => {
         console.log('Server TCP Close');
         clearContainer()
