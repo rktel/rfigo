@@ -31,7 +31,7 @@ const Figo_Deviceson = (props) => {
                 </Panel>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item>
-                <Panel style={{ width: 300, height: props.heightApp, backgroundColor: 'blue' }}>
+                <Panel style={{ height: props.heightApp, backgroundColor: 'blue' }}>
                     George
                 </Panel>
             </FlexboxGrid.Item>
