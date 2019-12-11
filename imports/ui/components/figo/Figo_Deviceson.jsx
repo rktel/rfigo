@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { FlexboxGrid, Col, Panel } from 'rsuite'
 import { CheckPicker } from 'rsuite'
 import { Form, FormGroup, ControlLabel, ButtonToolbar, Button } from 'rsuite'
-import { InputGroup, Input} from 'rsuite'
+import { InputGroup, Input, Icon} from 'rsuite'
 
 
 import { rstream } from '../../../api/streamers'
