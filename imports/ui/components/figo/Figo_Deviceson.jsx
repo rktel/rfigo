@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { FlexboxGrid, Panel } from 'rsuite'
+import { FlexboxGrid, Col, Panel } from 'rsuite'
 
 
 import { rstream } from '../../../api/streamers'
@@ -25,12 +25,12 @@ const Figo_Deviceson = (props) => {
     return (
 
         <FlexboxGrid>
-            <FlexboxGrid.Item colspan={8}>
+            <FlexboxGrid.Item componentClass={Col} colspan={24} md={6}>
                 <Panel style={{ backgroundColor: 'gray' }}>
                     Pepa
                 </Panel>
             </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={16}>
+            <FlexboxGrid.Item componentClass={Col} colspan={24} md={6}>
                 <Panel style={{ backgroundColor: 'blue' }}>
                     George
                 </Panel>
