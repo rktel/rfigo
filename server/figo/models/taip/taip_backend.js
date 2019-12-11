@@ -129,7 +129,7 @@ const onCloseSocket = (sock) => {
 }
 const DB_DevicesInsert = (mobileID, status) => {
     /** Status: 0 = 'offline', 1 = 'online' */
-    Devices.update(mobileID, status, { upsert: true })
+    Devices.update(mobileID, {status}, { upsert: true })
 }
 const PDU = (raw) => {
 
