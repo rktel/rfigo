@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { FlexboxGrid, Col, Panel } from 'rsuite'
 import { CheckPicker } from 'rsuite'
+import { Form, FormGroup, ControlLabel } from 'rsuite'
 
 
 import { rstream } from '../../../api/streamers'
@@ -29,11 +30,14 @@ const Figo_Deviceson = (props) => {
         <FlexboxGrid>
             <FlexboxGrid.Item componentClass={Col} colspan={24} md={6}>
                 <Panel style={{ backgroundColor: 'gray' }}>
-                    <FlexboxGrid justify="center">
-                        <FlexboxGrid.Item colspan={24}>
+
+                    <Form>
+                        <FormGroup>
+                            <ControlLabel>Dispositivos Online</ControlLabel>
                             <CheckPicker data={devices} value={selectedDevicesCP} onChange={value => setSelectedDevicesCP(value)} style={{ width: 240 }} />
-                        </FlexboxGrid.Item>
-                    </FlexboxGrid>
+                        </FormGroup>
+                    </Form>
+
                 </Panel>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item componentClass={Col} colspan={24} md={18}>
