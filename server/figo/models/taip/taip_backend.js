@@ -39,7 +39,7 @@ const clearContainer = () => {
     mobiles_9.clear()
 }
 const getAllContainers = () => {
-    const allContainers = new Map([...mobiles_0,
+    let allContainers = new Map([...mobiles_0,
     ...mobiles_1,
     ...mobiles_2,
     ...mobiles_3,
