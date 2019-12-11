@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { FlexboxGrid, Col, Panel } from 'rsuite'
 import { CheckPicker } from 'rsuite'
 import { Form, FormGroup, ControlLabel, ButtonToolbar, Button } from 'rsuite'
+import { InputGroup, Input} from 'rsuite'
 
 
 import { rstream } from '../../../api/streamers'
@@ -30,7 +31,6 @@ const Figo_Deviceson = (props) => {
         <FlexboxGrid>
             <FlexboxGrid.Item componentClass={Col} colspan={24} md={6}>
                 <Panel style={{ backgroundColor: 'gray' }}>
-
                     <Form>
                         <FormGroup>
                             <ControlLabel>Dispositivos Online</ControlLabel>
@@ -44,12 +44,14 @@ const Figo_Deviceson = (props) => {
                             </ButtonToolbar>
                         </FormGroup>
                     </Form>
-
                 </Panel>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item componentClass={Col} colspan={24} md={18}>
-                <Panel style={{ backgroundColor: 'blue' }}>
-                    George
+                <Panel style={{ backgroundColor: 'blue', height: props.heightApp }}>
+                    <InputGroup inside>
+                        <Input />
+                        <InputGroup.Button><Icon icon="telegram" /></InputGroup.Button>
+                    </InputGroup>
                 </Panel>
             </FlexboxGrid.Item>
         </FlexboxGrid>
