@@ -11,7 +11,7 @@ const Figo_Deviceson = (props) => {
     const devicesUpdate = () => {
         Meteor.call('getAllDevicesOnline', (errorDevicesDB, devicesDB) => {
             if (errorDevicesDB === undefined && devicesDB.length > 0) {
-                devicesDB.forEach(item => item.label = item.mobileID)
+                devicesDB.forEach(item => item.label = item.value = item.mobileID)
                 setDevices(devicesDB)
             }
         })
