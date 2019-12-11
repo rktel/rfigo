@@ -133,6 +133,7 @@ const DB_DevicesInsert = (mobileID, status) => {
     Devices.update(mobileID, status, { upsert: true })
 }
 rstream.on('DB_DevicesInsert', (mobileID, status) => {
+    console.log('DB_DevicesInsert',mobileID, status)
     DB_DevicesInsert(mobileID, status)
 })
 
