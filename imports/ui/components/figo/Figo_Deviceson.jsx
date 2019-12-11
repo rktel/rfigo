@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { FlexboxGrid } from 'rsuite'
+import { FlexboxGrid, Panel } from 'rsuite'
 
 
 import { rstream } from '../../../api/streamers'
@@ -9,7 +9,9 @@ const Figo_Deviceson = (props) => {
     const [devices, setDevices] = useState([])
     const devicesUpdate = () => {
         Meteor.call('getAllDevicesOnline', (errorDevicesDB, devicesDB) => {
-            console.log(errorDevicesDB, devicesDB)
+            if (errorDevicesDB === undefined && devicesDB.length > 0) {
+                setDevices(devicesDB)
+            }
         })
     }
     useEffect(() => {
@@ -22,8 +24,11 @@ const Figo_Deviceson = (props) => {
     const [selectedDevices, setSelectedDevices] = useState([])
     return (
 
-        <FlexboxGrid justify="space-between" align="top">
-
+        <FlexboxGrid justify="start" align="top">
+            <FlexboxGrid.Item>
+                <Panel style={{width: 300, height: props.heightApp, backgroundColor: 'gray'}}></Panel>
+            </FlexboxGrid.Item>
+            <FlexboxGrid.Item> B</FlexboxGrid.Item>
         </FlexboxGrid>
 
     )
