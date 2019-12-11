@@ -50,7 +50,7 @@ const Figo_Deviceson = (props) => {
                 <Panel style={{ backgroundColor: 'blue', height: props.heightApp }}>
                     <InputGroup inside size="lg">
                         <Input />
-                        <InputGroup.Button><Button>Enviar</Button></InputGroup.Button>
+                        <InputGroup.Button><Icon icon="send" /></InputGroup.Button>
                     </InputGroup>
                 </Panel>
             </FlexboxGrid.Item>
