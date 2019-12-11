@@ -26,9 +26,15 @@ const Figo_Deviceson = (props) => {
 
         <FlexboxGrid justify="start" align="top">
             <FlexboxGrid.Item>
-                <Panel style={{width: 300, height: props.heightApp, backgroundColor: 'gray'}}></Panel>
+                <Panel style={{ width: 300, height: props.heightApp, backgroundColor: 'gray' }}>
+                    Pepa
+                </Panel>
             </FlexboxGrid.Item>
-            <FlexboxGrid.Item> B</FlexboxGrid.Item>
+            <FlexboxGrid.Item>
+                <Panel style={{ width: 300, height: props.heightApp, backgroundColor: 'blue' }}>
+                    George
+                </Panel>
+            </FlexboxGrid.Item>
         </FlexboxGrid>
 
     )
