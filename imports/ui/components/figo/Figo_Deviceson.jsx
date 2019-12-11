@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { FlexboxGrid, Col, Panel } from 'rsuite'
+import { CheckPicker } from 'rsuite'
 
 
 import { rstream } from '../../../api/streamers'
@@ -21,13 +22,13 @@ const Figo_Deviceson = (props) => {
         })
     }, [])
     /* Selected devices*/
-    const [selectedDevices, setSelectedDevices] = useState([])
+    const [selectedDevicesCP, setSelectedDevicesCP] = useState([])
     return (
 
         <FlexboxGrid>
             <FlexboxGrid.Item componentClass={Col} colspan={24} md={6}>
                 <Panel style={{ backgroundColor: 'gray' }}>
-                    Pepa
+                    <CheckPicker data={devices} value={selectedDevicesCP} onChange={value => setSelectedDevicesCP(value)} />
                 </Panel>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item componentClass={Col} colspan={24} md={18}>
