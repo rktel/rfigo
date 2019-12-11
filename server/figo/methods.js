@@ -5,6 +5,6 @@ import { rstream } from '../../imports/api/streamers'
 
 Meteor.methods({
     getAllDevices() {
-        return Devices.find({}).fetch()
+        return Devices.find({ status: 1 }).fetch()
     },
 })
