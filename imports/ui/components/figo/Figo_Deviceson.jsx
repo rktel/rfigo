@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { FlexboxGrid, Panel, Col, IconButton, Icon } from 'rsuite'
-import { ButtonToolbar, Form, FormGroup, ControlLabel, SelectPicker } from 'rsuite'
+import { FlexboxGrid } from 'rsuite'
+
 
 import { rstream } from '../../../api/streamers'
 
 const Figo_Deviceson = (props) => {
- 
+    /* Devices */
     const [devices, setDevices] = useState([])
     useEffect(() => {
-        rstream.emit('getDevices')
-        rstream.on('devices', (devicesBack) => {
-            console.log(devicesBack)
-            setDevices(devicesBack)
+        Meteor.call('getAllDevices', devicesDB => {
+            console.log(devicesDB)
         })
     }, [])
- 
+    /* Selected devices*/
+    const [selectedDevices, setSelectedDevices] = useState([])
     return (
 
         <FlexboxGrid justify="space-between" align="top">

@@ -54,10 +54,11 @@ const getAllContainers = () => {
     return Array.from(allContainers)
 }
 
+/*
 rstream.on('getDevices', () => {
     rstream.emit('devices', getAllContainers())
 })
-
+*/
 const ServerTCP = (serverPort, serverHost) => {
 
     const server = createServer(Meteor.bindEnvironment((socketIn) => {
@@ -100,7 +101,7 @@ const onDataSocket = (data, sock) => {
             sock['mobileID'] = mobileID
             container.set(mobileID, sock)
             console.log('Conectado:  %s', mobileID)
-            rstream.emit('devices', getAllContainers())
+            //rstream.emit('devices', getAllContainers())
             DB_DevicesInsert(mobileID, 1)
         } else {
             /**HERE DATA FREQUENCY*/
@@ -122,15 +123,17 @@ const onCloseSocket = (sock) => {
         if (container.has(mobileID)) {
             container.delete(mobileID)
             console.log('Desconectado:  %s', mobileID)
-            rstream.emit('devices', getAllContainers())
+            //rstream.emit('devices', getAllContainers())
             DB_DevicesInsert(mobileID, 0)
         }
     }
 }
+/* Database */
 const DB_DevicesInsert = (mobileID, status) => {
     /** Status: 0 = 'offline', 1 = 'online' */
     Devices.update({ 'mobileID': mobileID }, { $set: { status } }, { upsert: true })
 }
+/* PDU (Parser) */
 const PDU = (raw) => {
 
     const parser = (chunkraw) => {
