@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { FlexboxGrid, Col, Panel } from 'rsuite'
 import { CheckPicker } from 'rsuite'
 import { Form, FormGroup, ControlLabel, ButtonToolbar, Button } from 'rsuite'
-import { InputGroup, Input, Icon} from 'rsuite'
+import { InputGroup, Input, Icon } from 'rsuite'
 
 
 import { rstream } from '../../../api/streamers'
@@ -34,7 +34,7 @@ const Figo_Deviceson = (props) => {
                     <Form>
                         <FormGroup>
                             <ControlLabel>Dispositivos Online</ControlLabel>
-                            <CheckPicker data={devices} value={selectedDevicesCP} onChange={value => setSelectedDevicesCP(value)} />
+                            <CheckPicker data={devices} value={selectedDevicesCP} onChange={value => setSelectedDevicesCP(value)} style={{ maxHeight: 290 }} />
                         </FormGroup>
                         <FormGroup>
                             <ControlLabel>Acciones</ControlLabel>
