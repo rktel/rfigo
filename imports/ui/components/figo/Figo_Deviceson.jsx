@@ -3,6 +3,7 @@ import { FlexboxGrid, Col, Panel } from 'rsuite'
 import { CheckPicker } from 'rsuite'
 import { Form, FormGroup, ControlLabel, ButtonToolbar, Button } from 'rsuite'
 import { InputGroup, Input, Icon } from 'rsuite'
+import { List } from 'rsuite'
 
 
 import { rstream } from '../../../api/streamers'
@@ -47,11 +48,18 @@ const Figo_Deviceson = (props) => {
                 </Panel>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item componentClass={Col} colspan={24} md={17}>
-                <Panel style={{ backgroundColor: 'blue', height: props.heightApp, position: 'relative' }}>
-                    <InputGroup inside size="lg" style={{position: 'absolute', bottom: 10}}>
+                <Panel style={{ backgroundColor: 'blue', height: props.heightApp }}>
+                    <InputGroup inside size="lg">
                         <Input />
                         <InputGroup.Button><Icon icon="send" /></InputGroup.Button>
                     </InputGroup>
+                    <List>
+                        {selectedDevicesCP.map((item, index) =>
+                            <List.Item key={index} index={index}>
+                                {item.mobileID}
+                            </List.Item>
+                        )}
+                    </List>
                 </Panel>
             </FlexboxGrid.Item>
         </FlexboxGrid>
