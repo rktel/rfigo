@@ -48,7 +48,7 @@ const Figo_Deviceson = (props) => {
             </FlexboxGrid.Item>
             <FlexboxGrid.Item componentClass={Col} colspan={24} md={17}>
                 <Panel style={{ backgroundColor: 'blue', height: props.heightApp, position: 'relative' }}>
-                    <InputGroup inside size="lg" style={{position: 'absolute', bottom: 0}}>
+                    <InputGroup inside size="lg" style={{position: 'absolute', bottom: 10}}>
                         <Input />
                         <InputGroup.Button><Icon icon="send" /></InputGroup.Button>
                     </InputGroup>
