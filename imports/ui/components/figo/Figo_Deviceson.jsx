@@ -53,7 +53,7 @@ const Figo_Deviceson = (props) => {
                         <Input />
                         <InputGroup.Button><Icon icon="send" /></InputGroup.Button>
                     </InputGroup>
-                    <List>
+                    <List style={{ height: props.heightApp - 100}}>
                         {selectedDevicesCP.map((item, index) =>
                             <List.Item key={index} index={index}>
                                 {item}
