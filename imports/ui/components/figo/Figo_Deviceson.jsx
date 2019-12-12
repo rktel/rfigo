@@ -34,7 +34,7 @@ const Figo_Deviceson = (props) => {
                     <Form>
                         <FormGroup>
                             <ControlLabel>Dispositivos Online</ControlLabel>
-                            <CheckPicker data={devices} value={selectedDevicesCP} onChange={value => setSelectedDevicesCP(value)} style={{ maxHeight: 290 }} />
+                            <CheckPicker data={devices} value={selectedDevicesCP} onChange={value => setSelectedDevicesCP(value)} style={{ maxWidth: 290 }} />
                         </FormGroup>
                         <FormGroup>
                             <ControlLabel>Acciones</ControlLabel>
