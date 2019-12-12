@@ -56,7 +56,7 @@ const Figo_Deviceson = (props) => {
                     <List>
                         {selectedDevicesCP.map((item, index) =>
                             <List.Item key={index} index={index}>
-                                {item.mobileID}
+                                {item}
                             </List.Item>
                         )}
                     </List>
