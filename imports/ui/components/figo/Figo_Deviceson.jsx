@@ -30,7 +30,10 @@ const Figo_Deviceson = (props) => {
     /* Selected devices*/
     const [selectedDevicesCP, setSelectedDevicesCP] = useState([])
     const onChangeSelectedDevicesCP = (value) => setSelectedDevicesCP(value)
-    const onCleanSelectedDevicesCP = () => setFlagShowInputChat(true)
+    const onCleanSelectedDevicesCP = () => {
+        setFlagShowInputChat(true)
+        setsetInputChat('')
+    }
     /*----------------------------Actions */
     // Show InputChat
     const [flagShowInputChat, setFlagShowInputChat] = useState(true)
@@ -46,6 +49,7 @@ const Figo_Deviceson = (props) => {
     // Click Button Send
     const onClickSendBtn = () => {
         alert(inputChat)
+        console.log(selectedDevicesCP)
     }
     return (
 
@@ -55,13 +59,14 @@ const Figo_Deviceson = (props) => {
                     <Form>
                         <FormGroup>
                             <ControlLabel>Dispositivos Online</ControlLabel>
-                            <CheckPicker data={devices} value={selectedDevicesCP} onChange={onChangeSelectedDevicesCP} style={{ width: 224 }} onClean={onCleanSelectedDevicesCP}/>
+                            <CheckPicker data={devices} value={selectedDevicesCP} onChange={onChangeSelectedDevicesCP} style={{ width: 224 }} onClean={onCleanSelectedDevicesCP} />
                         </FormGroup>
                         <FormGroup>
                             <ControlLabel>Acciones</ControlLabel>
                             <ButtonToolbar>
-                                <Button onClick={onClickChatBtn}>Chat</Button>
-                                <Button>Script</Button>
+                                <Button onClick={onClickChatBtn} color="blue">Chat</Button>
+                                <Button color="violet">Script</Button>
+                                <Button>Cancelar</Button>
                             </ButtonToolbar>
                         </FormGroup>
                     </Form>
