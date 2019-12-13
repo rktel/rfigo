@@ -29,7 +29,11 @@ const Figo_Deviceson = (props) => {
     }, [])
     /* Selected devices*/
     const [selectedDevicesCP, setSelectedDevicesCP] = useState([])
-    const onChangeSelectedDevicesCP = (value) => setSelectedDevicesCP(value)
+    const onChangeSelectedDevicesCP = (value) => {
+        if(selectedDevicesCP.length===0) setFlagShowInputChat(true)
+        if(selectedDevicesCP.length>0) setFlagShowInputChat(false)
+        setSelectedDevicesCP(value)
+    }
     const onCleanSelectedDevicesCP = () => {
         setFlagShowInputChat(true)
         setInputChat('')
@@ -39,13 +43,6 @@ const Figo_Deviceson = (props) => {
     const [flagShowInputChat, setFlagShowInputChat] = useState(true)
     const [inputChat, setInputChat] = useState('')
     const onChangeInputChat = (value) => setInputChat(value)
-    const onClickChatBtn = () => {
-        notDeepStrictEqual(selectedDevicesCP.length, 0)
-        let prevSelectedDevicesCP = selectedDevicesCP
-        prevSelectedDevicesCP = prevSelectedDevicesCP.map(el => ({ mobileID: el, action: 'chat', user: userFullname }))
-        Meteor.call('registerChatAction', prevSelectedDevicesCP)
-        setFlagShowInputChat(false)
-    }
     // Click Button Send
     const onClickSendBtn = () => {
         alert(inputChat)
@@ -69,7 +66,6 @@ const Figo_Deviceson = (props) => {
                         <FormGroup>
                             <ControlLabel>Acciones</ControlLabel>
                             <ButtonToolbar>
-                                <Button onClick={onClickChatBtn} color="blue">Chat</Button>
                                 <Button color="violet">Script</Button>
                                 <Button onClick={onClickCancelBtn}>Reset</Button>
                             </ButtonToolbar>
@@ -89,7 +85,7 @@ const Figo_Deviceson = (props) => {
                         </List>
                     </section>
                     <section>
-                        <InputGroup inside size="lg" disabled={flagShowInputChat || !selectedDevicesCP.length}>
+                        <InputGroup inside size="lg" disabled={flagShowInputChat}>
                             <Input onChange={onChangeInputChat} value={inputChat} onPressEnter={onClickSendBtn} />
                             <InputGroup.Button onClick={onClickSendBtn}><Icon icon="send" /></InputGroup.Button>
                         </InputGroup>
