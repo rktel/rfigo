@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Sidenav, Nav, Icon, Dropdown, Avatar } from 'rsuite'
+import { Sidenav, Nav, Icon, Dropdown, Avatar, Divider } from 'rsuite'
 
 const Figo_Sidenav = (props) => {
     const handleClickLogoutBtn = () => {
@@ -44,6 +44,7 @@ const Figo_Sidenav = (props) => {
                 <Nav.Item eventKey="3" icon={<Icon icon="file-code-o" />} onClick={() => props.history.push('/figo/scripts')}>
                     Scripts
                 </Nav.Item>
+                <Divider />
                 <Dropdown
                     placement="rightStart"
                     eventKey="4"
