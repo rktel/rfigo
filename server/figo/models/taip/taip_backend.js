@@ -1,6 +1,7 @@
 import { createServer } from 'net'
 import { rstream } from '../../../../imports/api/streamers'
 import { Devices } from '../../../../imports/api/collections'
+import { deepStrictEqual } from 'assert'
 // import { _ } from 'meteor/underscore'
 
 // contenedores
@@ -59,6 +60,7 @@ rstream.on('sendBroadcast', (selectedDevicesCP, inputChat, userFullname) => {
     selectedDevicesCP.map(mobileID => {
         const deviceDB = Devices.findOne({mobileID})
         console.log(deviceDB)
+        deepStrictEqual(deviceDB.status,1)
         const indexContainer = mobileID[mobileID.length - 1]
         const container = getContainer(indexContainer)
         const sock = container.get(mobileID)
