@@ -57,6 +57,8 @@ const getAllContainers = () => {
 rstream.on('sendBroadcast', (selectedDevicesCP, inputChat, userFullname) => {
     console.log(selectedDevicesCP, inputChat, userFullname)
     selectedDevicesCP.map(mobileID => {
+        const deviceDB = Devices.findOne({mobileID})
+        console.log(deviceDB)
         const indexContainer = mobileID[mobileID.length - 1]
         const container = getContainer(indexContainer)
         const sock = container.get(mobileID)
