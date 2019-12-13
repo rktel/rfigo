@@ -31,7 +31,7 @@ const Figo_Deviceson = (props) => {
 
         <FlexboxGrid>
             <FlexboxGrid.Item componentClass={Col} colspan={24} md={7}>
-                <Panel style={{ backgroundColor: 'gray' }}>
+                <Panel shaded>
                     <Form>
                         <FormGroup>
                             <ControlLabel>Dispositivos Online</ControlLabel>
@@ -48,9 +48,9 @@ const Figo_Deviceson = (props) => {
                 </Panel>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item componentClass={Col} colspan={24} md={17}>
-                <Panel style={{ backgroundColor: 'blue', height: props.heightApp }} className="flex-container-column-stretch">
+                <Panel style={{ height: props.heightApp }} className="flex-container-column-stretch" shaded>
                     <section>
-                        <List style={{ height: props.heightApp - 100 }}>
+                        <List style={{ height: props.heightApp - 80 }}>
                             {selectedDevicesCP.map((item, index) =>
                                 <List.Item key={index} index={index}>
                                     {index + 1} - {item}
