@@ -55,6 +55,7 @@ const Figo_Sidenav = (props) => {
                             {localStorage.getItem('rmain_user_firstname')[0].toUpperCase()}
                             {localStorage.getItem('rmain_user_lastname')[0].toUpperCase()}
                         </Avatar>
+                        {' '}
                         Cerrar sesion
                     </Dropdown.Item>
                 </Dropdown>
