@@ -20,8 +20,8 @@ const Figo_Home = (props) => {
                 <Figo_Sidenav />
             </Sidebar>
             <Container>
-                
-                <Content>
+
+                <Content style={{ padding: 8}}>
 
                     <Route path={'/figo/deviceson/'} render={() => (<Figo_Deviceson heightApp={props.heightApp} />)} />
                     <Route path={'/figo/taskstatus/'} render={() => (< Figo_Taskstatus />)} />
