@@ -34,12 +34,18 @@ const Figo_Deviceson = (props) => {
     /*----------------------------Actions */
     // Show InputChat
     const [flagShowInputChat, setFlagShowInputChat] = useState(true)
+    const [inputChat, setInputChat] = useState('')
+    const onChangeInputChat = (value) => setInputChat(value)
     const onClickChatBtn = () => {
         notDeepStrictEqual(selectedDevicesCP.length, 0)
         let prevSelectedDevicesCP = selectedDevicesCP
-        prevSelectedDevicesCP = prevSelectedDevicesCP.map(el => ({ mobileID: el, action: 'chat', actionStatus: 0, user: userFullname }))
+        prevSelectedDevicesCP = prevSelectedDevicesCP.map(el => ({ mobileID: el, action: 'chat', user: userFullname }))
         Meteor.call('registerChatAction', prevSelectedDevicesCP)
         setFlagShowInputChat(false)
+    }
+    // Click Button Send
+    const onClickSendBtn = () => {
+        alert(inputChat)
     }
     return (
 
@@ -67,15 +73,15 @@ const Figo_Deviceson = (props) => {
                         <List style={{ height: props.heightApp - 100 }}>
                             {selectedDevicesCP.map((item, index) =>
                                 <List.Item key={index} index={index}>
-                                    {index + 1} - {item}
+                                    {index + 1} => {item}
                                 </List.Item>
                             )}
                         </List>
                     </section>
                     <section>
                         <InputGroup inside size="lg" disabled={flagShowInputChat || !selectedDevicesCP.length}>
-                            <Input />
-                            <InputGroup.Button><Icon icon="send" /></InputGroup.Button>
+                            <Input onChange={onChangeInputChat} value={inputChat} />
+                            <InputGroup.Button onClick={onClickSendBtn}><Icon icon="send" /></InputGroup.Button>
                         </InputGroup>
                     </section>
                 </Panel>
