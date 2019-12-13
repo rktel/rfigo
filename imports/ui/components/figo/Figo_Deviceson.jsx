@@ -74,13 +74,13 @@ const Figo_Deviceson = (props) => {
             <FlexboxGrid.Item componentClass={Col} colspan={24} md={17}>
                 <Panel style={{ height: props.heightApp - 20 }} className="flex-container-column-stretch" shaded bordered>
                     <section>
-                        <List bordered>
+                        {selectedDevicesCP.length != 0 && <List bordered>
                             {selectedDevicesCP.map((item, index) =>
                                 <List.Item key={index} index={index}>
                                     {index + 1} => {item}
                                 </List.Item>
                             )}
-                        </List>
+                        </List>}
                     </section>
                     <section>
                         <InputGroup inside size="lg">
