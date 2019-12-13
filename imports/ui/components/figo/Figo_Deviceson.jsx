@@ -71,7 +71,7 @@ const Figo_Deviceson = (props) => {
                             <ButtonToolbar>
                                 <Button onClick={onClickChatBtn} color="blue">Chat</Button>
                                 <Button color="violet">Script</Button>
-                                <Button onClick={onClickCancelBtn}>Cancelar</Button>
+                                <Button onClick={onClickCancelBtn}>Reset</Button>
                             </ButtonToolbar>
                         </FormGroup>
                     </Form>
