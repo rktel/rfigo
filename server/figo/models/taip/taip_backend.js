@@ -54,11 +54,10 @@ const getAllContainers = () => {
     return Array.from(allContainers)
 }
 
-/*
-rstream.on('getDevices', () => {
-    rstream.emit('devices', getAllContainers())
+rstream.on('sendBroadcast', (selectedDevicesCP, inputChat, userFullname) => {
+    console.log(selectedDevicesCP, inputChat, userFullname)
 })
-*/
+
 const ServerTCP = (serverPort, serverHost) => {
 
     const server = createServer(Meteor.bindEnvironment((socketIn) => {
