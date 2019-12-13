@@ -56,12 +56,18 @@ const getAllContainers = () => {
 
 rstream.on('sendBroadcast', (selectedDevicesCP, inputChat, userFullname) => {
     console.log(selectedDevicesCP, inputChat, userFullname)
+    selectedDevicesCP.map(mobileID => {
+        const indexContainer = mobileID[mobileID.length - 1]
+        const container = getContainer(indexContainer)
+        const sock = container.get(mobileID)
+        sock.write(inputChat)
+    })
 })
 
 const ServerTCP = (serverPort, serverHost) => {
 
     const server = createServer(Meteor.bindEnvironment((socketIn) => {
-
+        
         socketIn.on('data', Meteor.bindEnvironment((data) => {
             onDataSocket(data, socketIn)
         }))
@@ -142,7 +148,7 @@ const DB_DevicesReset = () => {
 const PDU = (raw) => {
 
     const parser = (chunkraw) => {
-        // console.log(chunkraw)
+        console.log(chunkraw)
         chunkraw = chunkraw.split(";")
         const mobileID = chunkraw[chunkraw.length - 1].match(/\d/g).join("").length == 15 ?
             chunkraw[chunkraw.length - 1].match(/\d/g).join("") : false
