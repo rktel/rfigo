@@ -30,6 +30,7 @@ const Figo_Deviceson = (props) => {
     /* Selected devices*/
     const [selectedDevicesCP, setSelectedDevicesCP] = useState([])
     const onChangeSelectedDevicesCP = (value) => setSelectedDevicesCP(value)
+    const onCleanSelectedDevicesCP = () => setFlagShowInputChat(true)
     /*----------------------------Actions */
     // Show InputChat
     const [flagShowInputChat, setFlagShowInputChat] = useState(true)
@@ -48,7 +49,7 @@ const Figo_Deviceson = (props) => {
                     <Form>
                         <FormGroup>
                             <ControlLabel>Dispositivos Online</ControlLabel>
-                            <CheckPicker data={devices} value={selectedDevicesCP} onChange={onChangeSelectedDevicesCP} style={{ width: 224 }} />
+                            <CheckPicker data={devices} value={selectedDevicesCP} onChange={onChangeSelectedDevicesCP} style={{ width: 224 }} onClean={onCleanSelectedDevicesCP}/>
                         </FormGroup>
                         <FormGroup>
                             <ControlLabel>Acciones</ControlLabel>
@@ -62,7 +63,7 @@ const Figo_Deviceson = (props) => {
             </FlexboxGrid.Item>
             <FlexboxGrid.Item componentClass={Col} colspan={24} md={17}>
                 <Panel style={{ height: props.heightApp - 20 }} className="flex-container-column-stretch" shaded bordered>
-                    <section>
+                    <section>k
                         <List style={{ height: props.heightApp - 100 }}>
                             {selectedDevicesCP.map((item, index) =>
                                 <List.Item key={index} index={index}>
