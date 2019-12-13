@@ -52,7 +52,7 @@ const Figo_Deviceson = (props) => {
         console.log(selectedDevicesCP)
     }
     // Click Button Cancel
-    const onClickCancelBtn = () =>{
+    const onClickCancelBtn = () => {
         setInputChat('')
         setSelectedDevicesCP([])
     }
@@ -90,7 +90,7 @@ const Figo_Deviceson = (props) => {
                     </section>
                     <section>
                         <InputGroup inside size="lg" disabled={flagShowInputChat || !selectedDevicesCP.length}>
-                            <Input onChange={onChangeInputChat} value={inputChat} />
+                            <Input onChange={onChangeInputChat} value={inputChat} onPressEnter={onClickSendBtn} />
                             <InputGroup.Button onClick={onClickSendBtn}><Icon icon="send" /></InputGroup.Button>
                         </InputGroup>
                     </section>
