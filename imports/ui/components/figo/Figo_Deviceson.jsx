@@ -27,12 +27,24 @@ const Figo_Deviceson = (props) => {
     }, [])
     /* Selected devices*/
     const [selectedDevicesCP, setSelectedDevicesCP] = useState([])
-    const onChangeSelectedDevicesCP = (value) =>{
-        console.log(value)
-    }
-    /*Actions */
+    const onChangeSelectedDevicesCP = (value) => setSelectedDevicesCP(value)
+    /*----------------------------Actions */
+    // Show InputChat
+    const [flagShowInputChat, setFlagShowInputChat] = useState(false)
     const onClickChatBtn = () => {
-
+        let prevSelectedDevicesCP = selectedDevicesCP
+        prevSelectedDevicesCP.forEach(item => ({
+            mobileID: item,
+            action: 'script',
+            actionStatus: 0
+        }))
+        Meteor.call('registerChatAction', prevSelectedDevicesCP, localStorage.getItem('rmain_user_firstname') + ' ' + localStorage.getItem('rmain_user_lastname'),
+            (errorRegisterChatAction, result) => {
+                if(errorRegisterChatAction === undefined && result){
+                    setFlagShowInputChat(true)
+                }
+            }
+        )
     }
     return (
 
@@ -66,7 +78,7 @@ const Figo_Deviceson = (props) => {
                         </List>
                     </section>
                     <section>
-                        <InputGroup inside size="lg">
+                        <InputGroup inside size="lg" disabled={flagShowInputChat}>
                             <Input />
                             <InputGroup.Button><Icon icon="send" /></InputGroup.Button>
                         </InputGroup>
