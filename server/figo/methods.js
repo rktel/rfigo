@@ -7,7 +7,11 @@ Meteor.methods({
     getAllDevicesOnline() {
         return Devices.find({ status: 1 }).fetch()
     },
-    registerChatAction(devices) {
-        console.log(devices)
+    registerChatAction(devicesList) {
+        console.log(devicesList)
+        devicesList.map(el => {
+            el.created = new Date().toISOString()
+            Actions.insert(el)
+        })
     }
 })

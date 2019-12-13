@@ -37,13 +37,8 @@ const Figo_Deviceson = (props) => {
         notDeepStrictEqual(selectedDevicesCP.length, 0)
         let prevSelectedDevicesCP = selectedDevicesCP
         prevSelectedDevicesCP = prevSelectedDevicesCP.map(el => ({ mobileID: el, action: 'chat', actionStatus: 0, user: userFullname }))
-        Meteor.call('registerChatAction', prevSelectedDevicesCP,
-            (errorRegisterChatAction, result) => {
-                if (errorRegisterChatAction === undefined && result) {
-                    setFlagShowInputChat(false)
-                }
-            }
-        )
+        Meteor.call('registerChatAction', prevSelectedDevicesCP)
+        setFlagShowInputChat(false)
     }
     return (
 
