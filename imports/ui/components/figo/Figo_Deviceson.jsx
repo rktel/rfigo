@@ -41,6 +41,7 @@ const Figo_Deviceson = (props) => {
     const onChangeInputChat = (value) => setInputChat(value)
     // Click Button Send
     const onClickSendBtn = () => {
+        notDeepStrictEqual(selectedDevicesCP.length, 0)
         alert(inputChat)
         console.log(selectedDevicesCP)
     }
