@@ -48,12 +48,15 @@ const Figo_Sidenav = (props) => {
                     placement="rightStart"
                     eventKey="4"
                     title="Opciones"
-                    renderTitle={() => (<Avatar circle size="sm">
+                    icon={<Icon icon="user-circle-o" />}
+                >
+                    <Dropdown.Item eventKey="4-1">
+                    <Avatar circle size="sm">
                         {localStorage.getItem('rmain_user_firstname')[0].toUpperCase()}
                         {localStorage.getItem('rmain_user_lastname')[0].toUpperCase()}
-                    </Avatar>)}
-                >
-                    <Dropdown.Item eventKey="4-1" onClick={handleClickLogoutBtn}>Cerrar sesion</Dropdown.Item>
+                    </Avatar>
+                    </Dropdown.Item>
+                    <Dropdown.Item eventKey="4-2" onClick={handleClickLogoutBtn}>Cerrar sesion</Dropdown.Item>
 
                 </Dropdown>
             </Nav>
