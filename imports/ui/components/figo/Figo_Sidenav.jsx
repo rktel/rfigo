@@ -48,7 +48,7 @@ const Figo_Sidenav = (props) => {
                     placement="rightStart"
                     eventKey="4"
                     title="Opciones"
-                    renderTitle={() => (<Avatar circle>
+                    renderTitle={() => (<Avatar circle size="sm">
                         {localStorage.getItem('rmain_user_firstname')[0].toUpperCase()}
                         {localStorage.getItem('rmain_user_lastname')[0].toUpperCase()}
                     </Avatar>)}
