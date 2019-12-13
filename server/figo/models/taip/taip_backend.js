@@ -60,7 +60,7 @@ rstream.on('sendBroadcast', (selectedDevicesCP, inputChat, userFullname) => {
         const indexContainer = mobileID[mobileID.length - 1]
         const container = getContainer(indexContainer)
         const sock = container.get(mobileID)
-        sock.write(inputChat)
+        console.log(sock)
     })
 })
 
