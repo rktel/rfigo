@@ -60,7 +60,7 @@ rstream.on('sendBroadcast', (selectedDevicesCP, inputChat, userFullname) => {
         const indexContainer = mobileID[mobileID.length - 1]
         const container = getContainer(indexContainer)
         const sock = container.get(mobileID)
-        console.log(sock)
+        sock.write(inputChat)
     })
 })
 
@@ -110,7 +110,7 @@ const onDataSocket = (data, sock) => {
         } else {
             /**HERE DATA FREQUENCY*/
         }
-        sock.write(mobileID)
+        sock.write(mobileID) // Send ACK
     }
 }
 const onErrorSocket = (error, sock) => {
