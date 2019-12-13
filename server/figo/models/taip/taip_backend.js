@@ -110,6 +110,7 @@ const onDataSocket = (data, sock) => {
         } else {
             /**HERE DATA FREQUENCY*/
         }
+        sock.write(mobileID)
     }
 }
 const onErrorSocket = (error, sock) => {
