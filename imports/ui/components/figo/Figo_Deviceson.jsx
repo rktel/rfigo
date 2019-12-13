@@ -30,17 +30,13 @@ const Figo_Deviceson = (props) => {
     /* Selected devices*/
     const [selectedDevicesCP, setSelectedDevicesCP] = useState([])
     const onChangeSelectedDevicesCP = (value) => {
-        if(selectedDevicesCP.length===0) setFlagShowInputChat(true)
-        if(selectedDevicesCP.length>0) setFlagShowInputChat(false)
         setSelectedDevicesCP(value)
     }
     const onCleanSelectedDevicesCP = () => {
-        setFlagShowInputChat(true)
         setInputChat('')
     }
     /*----------------------------Actions */
     // Show InputChat
-    const [flagShowInputChat, setFlagShowInputChat] = useState(true)
     const [inputChat, setInputChat] = useState('')
     const onChangeInputChat = (value) => setInputChat(value)
     // Click Button Send
@@ -76,7 +72,7 @@ const Figo_Deviceson = (props) => {
             <FlexboxGrid.Item componentClass={Col} colspan={24} md={17}>
                 <Panel style={{ height: props.heightApp - 20 }} className="flex-container-column-stretch" shaded bordered>
                     <section>
-                        <List  bordered>
+                        <List bordered>
                             {selectedDevicesCP.map((item, index) =>
                                 <List.Item key={index} index={index}>
                                     {index + 1} => {item}
@@ -85,7 +81,7 @@ const Figo_Deviceson = (props) => {
                         </List>
                     </section>
                     <section>
-                        <InputGroup inside size="lg" disabled={flagShowInputChat}>
+                        <InputGroup inside size="lg">
                             <Input onChange={onChangeInputChat} value={inputChat} onPressEnter={onClickSendBtn} />
                             <InputGroup.Button onClick={onClickSendBtn}><Icon icon="send" /></InputGroup.Button>
                         </InputGroup>
