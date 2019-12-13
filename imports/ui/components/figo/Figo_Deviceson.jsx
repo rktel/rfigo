@@ -27,6 +27,13 @@ const Figo_Deviceson = (props) => {
     }, [])
     /* Selected devices*/
     const [selectedDevicesCP, setSelectedDevicesCP] = useState([])
+    const onChangeSelectedDevicesCP = (value) =>{
+        console.log(value)
+    }
+    /*Actions */
+    const onClickChatBtn = () => {
+
+    }
     return (
 
         <FlexboxGrid>
@@ -35,12 +42,12 @@ const Figo_Deviceson = (props) => {
                     <Form>
                         <FormGroup>
                             <ControlLabel>Dispositivos Online</ControlLabel>
-                            <CheckPicker data={devices} value={selectedDevicesCP} onChange={value => setSelectedDevicesCP(value)} style={{ width: 224 }} />
+                            <CheckPicker data={devices} value={selectedDevicesCP} onChange={onChangeSelectedDevicesCP} style={{ width: 224 }} />
                         </FormGroup>
                         <FormGroup>
                             <ControlLabel>Acciones</ControlLabel>
                             <ButtonToolbar>
-                                <Button>Chat</Button>
+                                <Button onClick={onClickChatBtn}>Chat</Button>
                                 <Button>Script</Button>
                             </ButtonToolbar>
                         </FormGroup>
