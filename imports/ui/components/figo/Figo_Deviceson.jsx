@@ -4,11 +4,13 @@ import { CheckPicker } from 'rsuite'
 import { Form, FormGroup, ControlLabel, ButtonToolbar, Button } from 'rsuite'
 import { InputGroup, Input, Icon } from 'rsuite'
 import { List } from 'rsuite'
-
+import assert  from 'assert'
 
 import { rstream } from '../../../api/streamers'
 
 const Figo_Deviceson = (props) => {
+    /*User fullname */
+    const userFullname = localStorage.getItem('rmain_user_firstname') + ' ' + localStorage.getItem('rmain_user_lastname')
     /* Devices */
     const [devices, setDevices] = useState([])
     const devicesUpdate = () => {
@@ -32,9 +34,10 @@ const Figo_Deviceson = (props) => {
     // Show InputChat
     const [flagShowInputChat, setFlagShowInputChat] = useState(true)
     const onClickChatBtn = () => {
+
         let prevSelectedDevicesCP = selectedDevicesCP
-        prevSelectedDevicesCP = prevSelectedDevicesCP.map(el => ({ mobileID: el, action: 'chat', actionStatus: 0 }))
-        Meteor.call('registerChatAction', prevSelectedDevicesCP, localStorage.getItem('rmain_user_firstname') + ' ' + localStorage.getItem('rmain_user_lastname'),
+        prevSelectedDevicesCP = prevSelectedDevicesCP.map(el => ({ mobileID: el, action: 'chat', actionStatus: 0, user: userFullname }))
+        Meteor.call('registerChatAction', prevSelectedDevicesCP,
             (errorRegisterChatAction, result) => {
                 if (errorRegisterChatAction === undefined && result) {
                     setFlagShowInputChat(false)
