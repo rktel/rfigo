@@ -72,7 +72,7 @@ const Figo_Deviceson = (props) => {
                         </List>
                     </section>
                     <section>
-                        <InputGroup inside size="lg" disabled={flagShowInputChat}>
+                        <InputGroup inside size="lg" disabled={flagShowInputChat || !selectedDevicesCP.length}>
                             <Input />
                             <InputGroup.Button><Icon icon="send" /></InputGroup.Button>
                         </InputGroup>
