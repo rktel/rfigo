@@ -48,18 +48,22 @@ const Figo_Deviceson = (props) => {
                 </Panel>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item componentClass={Col} colspan={24} md={17}>
-                <Panel style={{ backgroundColor: 'blue', height: props.heightApp }}>
-                    <InputGroup inside size="lg">
-                        <Input />
-                        <InputGroup.Button><Icon icon="send" /></InputGroup.Button>
-                    </InputGroup>
-                    <List style={{ height: props.heightApp - 100 }}>
-                        {selectedDevicesCP.map((item, index) =>
-                            <List.Item key={index} index={index}>
-                                {index+1} - {item}
-                            </List.Item>
-                        )}
-                    </List>
+                <Panel style={{ backgroundColor: 'blue', height: props.heightApp }} className="flex-container-column-stretch">
+                    <section>
+                        <List style={{ height: props.heightApp - 100 }}>
+                            {selectedDevicesCP.map((item, index) =>
+                                <List.Item key={index} index={index}>
+                                    {index + 1} - {item}
+                                </List.Item>
+                            )}
+                        </List>
+                    </section>
+                    <section>
+                        <InputGroup inside size="lg">
+                            <Input />
+                            <InputGroup.Button><Icon icon="send" /></InputGroup.Button>
+                        </InputGroup>
+                    </section>
                 </Panel>
             </FlexboxGrid.Item>
         </FlexboxGrid>
