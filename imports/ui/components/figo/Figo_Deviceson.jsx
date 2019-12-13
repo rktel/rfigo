@@ -4,7 +4,7 @@ import { CheckPicker } from 'rsuite'
 import { Form, FormGroup, ControlLabel, ButtonToolbar, Button } from 'rsuite'
 import { InputGroup, Input, Icon } from 'rsuite'
 import { List } from 'rsuite'
-import assert  from 'assert'
+import { notDeepStrictEqual } from 'assert'
 
 import { rstream } from '../../../api/streamers'
 
@@ -34,7 +34,7 @@ const Figo_Deviceson = (props) => {
     // Show InputChat
     const [flagShowInputChat, setFlagShowInputChat] = useState(true)
     const onClickChatBtn = () => {
-
+        notDeepStrictEqual(selectedDevicesCP.length, 0)
         let prevSelectedDevicesCP = selectedDevicesCP
         prevSelectedDevicesCP = prevSelectedDevicesCP.map(el => ({ mobileID: el, action: 'chat', actionStatus: 0, user: userFullname }))
         Meteor.call('registerChatAction', prevSelectedDevicesCP,
