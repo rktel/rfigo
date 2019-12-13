@@ -32,7 +32,7 @@ const Figo_Deviceson = (props) => {
     const onChangeSelectedDevicesCP = (value) => setSelectedDevicesCP(value)
     const onCleanSelectedDevicesCP = () => {
         setFlagShowInputChat(true)
-        setsetInputChat('')
+        setInputChat('')
     }
     /*----------------------------Actions */
     // Show InputChat
@@ -51,6 +51,11 @@ const Figo_Deviceson = (props) => {
         alert(inputChat)
         console.log(selectedDevicesCP)
     }
+    // Click Button Cancel
+    const onClickCancelBtn = () =>{
+        setInputChat('')
+        setSelectedDevicesCP([])
+    }
     return (
 
         <FlexboxGrid>
@@ -66,7 +71,7 @@ const Figo_Deviceson = (props) => {
                             <ButtonToolbar>
                                 <Button onClick={onClickChatBtn} color="blue">Chat</Button>
                                 <Button color="violet">Script</Button>
-                                <Button>Cancelar</Button>
+                                <Button onClick={onClickCancelBtn}>Cancelar</Button>
                             </ButtonToolbar>
                         </FormGroup>
                     </Form>
