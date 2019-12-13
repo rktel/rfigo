@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Sidenav, Nav, Icon, Dropdown } from 'rsuite'
+import { Sidenav, Nav, Icon, Dropdown, Avatar } from 'rsuite'
 
 const Figo_Sidenav = (props) => {
     const handleClickLogoutBtn = () => {
@@ -48,7 +48,10 @@ const Figo_Sidenav = (props) => {
                     placement="rightStart"
                     eventKey="4"
                     title="Opciones"
-                    icon={<Icon icon="more" />}
+                    renderTitle={() => (<Avatar circle>
+                        {localStorage.getItem('rmain_user_firstname')[0].toUpperCase()}
+                        {localStorage.getItem('rmain_user_lastname')[0].toUpperCase()}
+                    </Avatar>)}
                 >
                     <Dropdown.Item eventKey="4-1" onClick={handleClickLogoutBtn}>Cerrar sesion</Dropdown.Item>
 
