@@ -60,7 +60,7 @@ const Figo_Deviceson = (props) => {
 
         <FlexboxGrid>
             <FlexboxGrid.Item componentClass={Col} colspan={24} md={7}>
-                <Panel shaded bordered collapsible={true} defaultExpanded={true}>
+                <Panel shaded bordered collapsible defaultExpanded={true}>
                     <Form>
                         <FormGroup>
                             <ControlLabel>Dispositivos Online</ControlLabel>
