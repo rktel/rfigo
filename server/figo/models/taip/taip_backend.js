@@ -72,16 +72,16 @@ rstream.on('sendBroadcast', (selectedDevicesCP, inputChat, userFullname) => {
 
 let sockets = []
 
-function _onDataSocket (data, socket) {
+function _onDataSocket(data, socket) {
     const socketAddress = socket.remoteAddress
     const socketPort = socket.remotePort
     const rawData = data.toString().trim()
     let isTAIP = false
-    isTAIP = (rawData.match(/\d/g).join("").length === 15)
+    console.log(rawData.match(/\d/g).join("").length === 15)
     console.log(rawData, isTAIP)
 }
-function _onCloseSocket (socket) {}
-function _onErrorSocket (socketError, socket) {}
+function _onCloseSocket(socket) { }
+function _onErrorSocket(socketError, socket) { }
 
 
 const ServerTCP = (serverPort, serverHost) => {
@@ -125,7 +125,7 @@ const onDataSocket = (data, sock) => {
         if (!container.has(mobileID)) {
             sock['mobileID'] = mobileID
             container.set(mobileID, sock)
-            console.log(sock.remoteAddress +':'+ sock.remotePort)
+            console.log(sock.remoteAddress + ':' + sock.remotePort)
             console.log('Conectado:  %s', mobileID)
             DB_DevicesUpdate(mobileID, 1)
         } else {
