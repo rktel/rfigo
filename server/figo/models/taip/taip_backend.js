@@ -79,17 +79,25 @@ function _onDataSocket(data, socket) {
     const chunkraw = rawData.split(";")
     const mobileID = chunkraw[chunkraw.length - 1].match(/\d/g).join("").length == 15 ?
         chunkraw[chunkraw.length - 1].match(/\d/g).join("") : false
-    if(mobileID){
-        if(socket.mobileID == undefined){
+    if (mobileID) {
+        if (socket.mobileID == undefined) {
             socket.mobileID = mobileID
-            console.log("First connection:", socket.mobileID, socketAddress, socketPort)
-        }else{
+            sockets.push(socket)
+        } else {
             console.log("Last update:", socket.mobileID)
         }
 
     }
 }
-function _onCloseSocket(socket) { }
+function _onCloseSocket(socket) {
+    let index = sockets.findIndex(function (element) {
+        return element.mobileID === socket.mobileID
+    })
+    if (index !== -1) {
+        sockets.splice(index, 1)
+        console.log("splice:",socket.mobileID)
+    }
+}
 function _onErrorSocket(socketError, socket) { }
 
 
