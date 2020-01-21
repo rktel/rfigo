@@ -72,13 +72,14 @@ rstream.on('sendBroadcast', (selectedDevicesCP, inputChat, userFullname) => {
 
 let sockets = []
 rstream.on('broadcast', function (mobileIDList, command, user) {
+    console.log(mobileIDList, command, user)
     
     mobileIDList.map(mobileID => {
         let index = sockets.findIndex(function (element) {
             return element.mobileID === mobileID
         })
         if (index !== -1) {
-            console.log(mobileIDList, command, user)
+            console.log("Send command to:", sockets[index].mobileID)
             sockets[index].write(command)
         }
     })
