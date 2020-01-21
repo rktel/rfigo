@@ -96,7 +96,7 @@ function _onErrorSocket(socketError, socket) { }
 const ServerTCP = (serverPort, serverHost) => {
 
     const server = createServer(Meteor.bindEnvironment((socketIn) => {
-
+        console.log(socketIn.mobileID)
         socketIn.on('data', Meteor.bindEnvironment((data) => {
             _onDataSocket(data, socketIn)
         }))
