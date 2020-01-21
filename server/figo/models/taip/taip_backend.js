@@ -84,7 +84,7 @@ function _onDataSocket(data, socket) {
             socket.mobileID = mobileID
             console.log("First connection:", socket.mobileID)
         }else{
-
+            console.log("Last update:", socket.mobileID)
         }
 
     }
