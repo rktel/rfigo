@@ -80,7 +80,13 @@ function _onDataSocket(data, socket) {
     const mobileID = chunkraw[chunkraw.length - 1].match(/\d/g).join("").length == 15 ?
         chunkraw[chunkraw.length - 1].match(/\d/g).join("") : false
     if(mobileID){
-        console.log(rawData)
+        if(socket.mobileID == undefined){
+            socket.mobileID = mobileID
+            console.log("First connection:", socket.mobileID)
+        }else{
+
+        }
+
     }
 }
 function _onCloseSocket(socket) { }
