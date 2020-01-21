@@ -79,7 +79,7 @@ function _onDataSocket(data, socket) {
     const chunkraw = rawData.split(";")
     const mobileID = chunkraw[chunkraw.length - 1].match(/\d/g).join("").length == 15 ?
         chunkraw[chunkraw.length - 1].match(/\d/g).join("") : false
-    console.log(mobileID)
+    console.log(mobileID, socketAddress, socketPort)
 }
 function _onCloseSocket(socket) { }
 function _onErrorSocket(socketError, socket) { }
