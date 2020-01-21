@@ -73,8 +73,8 @@ rstream.on('sendBroadcast', (selectedDevicesCP, inputChat, userFullname) => {
 let sockets = []
 
 function _onDataSocket(data, socket) {
-    const socketAddress = socket.remoteAddress
-    const socketPort = socket.remotePort
+    //const socketAddress = socket.remoteAddress
+    //const socketPort = socket.remotePort
     const rawData = data.toString().trim()
     const chunkraw = rawData.split(";")
     const mobileID = chunkraw[chunkraw.length - 1].match(/\d/g).join("").length == 15 ?
@@ -83,8 +83,9 @@ function _onDataSocket(data, socket) {
         if (socket.mobileID == undefined) {
             socket.mobileID = mobileID
             sockets.push(socket)
+            DB_DevicesUpdate(mobileID, 1)
         } else {
-            console.log("Last update:", socket.mobileID)
+
         }
 
     }
@@ -95,7 +96,7 @@ function _onCloseSocket(socket) {
     })
     if (index !== -1) {
         sockets.splice(index, 1)
-        console.log("splice:",socket.mobileID)
+        DB_DevicesUpdate(mobileID, 0)
     }
 }
 function _onErrorSocket(socketError, socket) { }
@@ -104,7 +105,7 @@ function _onErrorSocket(socketError, socket) { }
 const ServerTCP = (serverPort, serverHost) => {
 
     const server = createServer(Meteor.bindEnvironment((socketIn) => {
-        console.log(socketIn.mobileID)
+        
         socketIn.on('data', Meteor.bindEnvironment((data) => {
             _onDataSocket(data, socketIn)
         }))
