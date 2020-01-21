@@ -77,7 +77,7 @@ function _onDataSocket(data, socket) {
     const socketPort = socket.remotePort
     const rawData = data.toString().trim()
     let isTAIP = false
-    console.log(rawData.match(/\d/g).join("").length === 15)
+    console.log(rawData.match(/\d/g).join("").length == 15)
     console.log(rawData, isTAIP)
 }
 function _onCloseSocket(socket) { }
