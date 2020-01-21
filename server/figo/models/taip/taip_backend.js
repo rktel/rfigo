@@ -96,7 +96,7 @@ function _onDataSocket(data, socket) {
             sockets.push(socket)
             DB_DevicesUpdate(mobileID, 1)
         } else {
-            // last update
+            console.log(rawData)
         }
 
     }
