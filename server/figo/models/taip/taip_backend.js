@@ -69,18 +69,33 @@ rstream.on('sendBroadcast', (selectedDevicesCP, inputChat, userFullname) => {
     })
 })
 
+
+let sockets = []
+
+function _onDataSocket (data, socket) {
+    const socketAddress = socket.remoteAddress
+    const socketPort = socket.remotePort
+    const rawData = data.toString().trim()
+    let isTAIP = false
+    isTAIP = rawData.match(/\d/g).join("").length == 15
+    console.log(rawData, isTAIP)
+}
+function _onCloseSocket (socket) {}
+function _onErrorSocket (socketError, socket) {}
+
+
 const ServerTCP = (serverPort, serverHost) => {
 
     const server = createServer(Meteor.bindEnvironment((socketIn) => {
 
         socketIn.on('data', Meteor.bindEnvironment((data) => {
-            onDataSocket(data, socketIn)
+            _onDataSocket(data, socketIn)
         }))
         socketIn.on('close', Meteor.bindEnvironment(() => {
-            onCloseSocket(socketIn)
+            _onCloseSocket(socketIn)
         }))
         socketIn.on('error', Meteor.bindEnvironment((socketError) => {
-            onErrorSocket(socketError, socketIn)
+            _onErrorSocket(socketError, socketIn)
         }))
     }))
     server.on('close', () => {
@@ -112,7 +127,7 @@ const onDataSocket = (data, sock) => {
             container.set(mobileID, sock)
             console.log(sock.remoteAddress +':'+ sock.remotePort)
             console.log('Conectado:  %s', mobileID)
-            DB_DevicesInsert(mobileID, 1)
+            DB_DevicesUpdate(mobileID, 1)
         } else {
             /**HERE DATA FREQUENCY*/
         }
@@ -134,12 +149,12 @@ const onCloseSocket = (sock) => {
         if (container.has(mobileID)) {
             container.delete(mobileID)
             console.log('Desconectado:  %s', mobileID)
-            DB_DevicesInsert(mobileID, 0)
+            DB_DevicesUpdate(mobileID, 0)
         }
     }
 }
 /* Database */
-const DB_DevicesInsert = (mobileID, status) => {
+const DB_DevicesUpdate = (mobileID, status) => {
     /** Status: 0 = 'offline', 1 = 'online' */
     Devices.update({ 'mobileID': mobileID }, { $set: { status } }, { upsert: true }, (error, success) => {
         if (error === null && success === 1) {
