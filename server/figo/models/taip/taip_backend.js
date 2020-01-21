@@ -75,9 +75,9 @@ let sockets = []
 function _onDataSocket (data, socket) {
     const socketAddress = socket.remoteAddress
     const socketPort = socket.remotePort
-    const rawData = data.toString()
+    const rawData = data.toString().trim()
     let isTAIP = false
-    isTAIP = rawData.match(/\d/g).join("").length == 15
+    isTAIP = (rawData.match(/\d/g).join("").length === 15)
     console.log(rawData, isTAIP)
 }
 function _onCloseSocket (socket) {}
