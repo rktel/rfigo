@@ -71,7 +71,18 @@ rstream.on('sendBroadcast', (selectedDevicesCP, inputChat, userFullname) => {
 
 
 let sockets = []
-
+rstream.on('broadcast', function (mobileIDList, command, user) {
+    
+    mobileIDList.map(mobileID => {
+        let index = sockets.findIndex(function (element) {
+            return element.mobileID === mobileID
+        })
+        if (index !== -1) {
+            console.log(mobileIDList, command, user)
+            sockets[index].write(command)
+        }
+    })
+})
 function _onDataSocket(data, socket) {
     //const socketAddress = socket.remoteAddress
     //const socketPort = socket.remotePort
@@ -85,7 +96,7 @@ function _onDataSocket(data, socket) {
             sockets.push(socket)
             DB_DevicesUpdate(mobileID, 1)
         } else {
-
+            // last update
         }
 
     }
@@ -96,7 +107,7 @@ function _onCloseSocket(socket) {
     })
     if (index !== -1) {
         sockets.splice(index, 1)
-        DB_DevicesUpdate(mobileID, 0)
+        DB_DevicesUpdate(socket.mobileID, 0)
     }
 }
 function _onErrorSocket(socketError, socket) { }
@@ -105,7 +116,7 @@ function _onErrorSocket(socketError, socket) { }
 const ServerTCP = (serverPort, serverHost) => {
 
     const server = createServer(Meteor.bindEnvironment((socketIn) => {
-        
+
         socketIn.on('data', Meteor.bindEnvironment((data) => {
             _onDataSocket(data, socketIn)
         }))

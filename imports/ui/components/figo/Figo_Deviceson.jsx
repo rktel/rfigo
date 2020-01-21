@@ -43,7 +43,7 @@ const Figo_Deviceson = (props) => {
     const onClickSendBtn = () => {
         notDeepStrictEqual(selectedDevicesCP.length, 0)
         notDeepStrictEqual(inputChat.length, 0)
-        rstream.emit('sendBroadcast', selectedDevicesCP, inputChat, userFullname)
+        rstream.emit('broadcast', selectedDevicesCP, inputChat, userFullname)
     }
     // Click Button Cancel
     const onClickCancelBtn = () => {
