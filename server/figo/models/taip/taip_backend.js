@@ -76,9 +76,10 @@ function _onDataSocket(data, socket) {
     const socketAddress = socket.remoteAddress
     const socketPort = socket.remotePort
     const rawData = data.toString().trim()
-    let isTAIP = false
-    console.log(rawData.match(/\d/g).join("").length == 15)
-    console.log(rawData, isTAIP)
+    const chunkraw = rawData.split(";")
+    const mobileID = chunkraw[chunkraw.length - 1].match(/\d/g).join("").length == 15 ?
+        chunkraw[chunkraw.length - 1].match(/\d/g).join("") : false
+    console.log(mobileID)
 }
 function _onCloseSocket(socket) { }
 function _onErrorSocket(socketError, socket) { }
