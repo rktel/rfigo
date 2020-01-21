@@ -82,7 +82,7 @@ function _onDataSocket(data, socket) {
     if(mobileID){
         if(socket.mobileID == undefined){
             socket.mobileID = mobileID
-            console.log("First connection:", socket.mobileID)
+            console.log("First connection:", socket.mobileID, socketAddress, socketPort)
         }else{
             console.log("Last update:", socket.mobileID)
         }
