@@ -110,6 +110,7 @@ const onDataSocket = (data, sock) => {
         if (!container.has(mobileID)) {
             sock['mobileID'] = mobileID
             container.set(mobileID, sock)
+            console.log(sock.remoteAddress +':'+ sock.remotePort)
             console.log('Conectado:  %s', mobileID)
             DB_DevicesInsert(mobileID, 1)
         } else {
