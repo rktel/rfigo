@@ -176,5 +176,5 @@ const PDU = (raw) => {
 
 }
 
-//DB_DevicesReset()
-//ServerTCP(7100, '0.0.0.0')
+DB_DevicesReset()
+ServerTCP(7100, '0.0.0.0')
