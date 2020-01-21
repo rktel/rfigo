@@ -58,20 +58,21 @@ const getAllContainers = () => {
 rstream.on('sendBroadcast', (selectedDevicesCP, inputChat, userFullname) => {
     console.log(selectedDevicesCP, inputChat, userFullname)
     selectedDevicesCP.map(mobileID => {
-        const deviceDB = Devices.findOne({mobileID})
-        console.log(deviceDB)
-        deepStrictEqual(deviceDB.status,1)
+        const deviceDB = Devices.findOne({ mobileID })
+        deepStrictEqual(deviceDB.status, 1)
         const indexContainer = mobileID[mobileID.length - 1]
         const container = getContainer(indexContainer)
         const sock = container.get(mobileID)
-        sock.write(inputChat)
+        sock.write(inputChat, () => {
+            /** SAVE COMMAND */
+        })
     })
 })
 
 const ServerTCP = (serverPort, serverHost) => {
 
     const server = createServer(Meteor.bindEnvironment((socketIn) => {
-        
+
         socketIn.on('data', Meteor.bindEnvironment((data) => {
             onDataSocket(data, socketIn)
         }))
