@@ -181,7 +181,7 @@ const PDU = (raw) => {
 
 const TcpServer = require('tcpserver');
  
-const tcpServer = new TcpServer(7100);
+const tcpServer = new TcpServer(7100, '0.0.0.0');
 tcpServer.start();
 tcpServer.callback['connect'] = function(client){
     console.log('%s:%s connect.', client['socket'].remoteAddress, client['socket'].remotePort);
