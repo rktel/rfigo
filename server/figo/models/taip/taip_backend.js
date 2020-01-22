@@ -4,7 +4,7 @@ import { Devices } from '../../../../imports/api/collections'
 import { deepStrictEqual } from 'assert'
 // import { _ } from 'meteor/underscore'
 
-// contenedores
+/*
 const mobiles_0 = new Map()
 const mobiles_1 = new Map()
 const mobiles_2 = new Map()
@@ -15,7 +15,7 @@ const mobiles_6 = new Map()
 const mobiles_7 = new Map()
 const mobiles_8 = new Map()
 const mobiles_9 = new Map()
-// get contenedor
+
 const getContainer = (index) => {
     if (index === '0') return mobiles_0
     if (index === '1') return mobiles_1
@@ -64,16 +64,16 @@ rstream.on('sendBroadcast', (selectedDevicesCP, inputChat, userFullname) => {
         const container = getContainer(indexContainer)
         const sock = container.get(mobileID)
         sock.write(inputChat, () => {
-            /** SAVE COMMAND */
+          
         })
     })
 })
 
-
+*/
 let sockets = []
 rstream.on('broadcast', function (mobileIDList, command, user) {
     console.log(mobileIDList, command, user)
-    
+
     mobileIDList.map(mobileID => {
         let index = sockets.findIndex(function (element) {
             return element.mobileID === mobileID
@@ -96,8 +96,18 @@ function _onDataSocket(data, socket) {
             socket.mobileID = mobileID
             sockets.push(socket)
             DB_DevicesUpdate(mobileID, 1)
-        } else {
-            console.log(rawData)
+        } else if (socket.mobileID == mobileID) {
+            let index = sockets.findIndex(function (element) {
+                return element.mobileID === mobileID
+            })
+            if (index !== -1) {
+                sockets.splice(index, 1)
+                socket.mobileID = mobileID
+                sockets.push(socket)
+                DB_DevicesUpdate(socket.mobileID, 1)
+            }
+        }else{
+            console.log('Devices undefined')
         }
 
     }
@@ -130,7 +140,7 @@ const ServerTCP = (serverPort, serverHost) => {
     }))
     server.on('close', () => {
         console.log('Server TCP Close');
-        clearContainer()
+        sockets = [];
     })
     server.on('error', (serverError) => {
         if (serverError.code === 'EADDRINUSE') {
