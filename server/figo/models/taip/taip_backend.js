@@ -122,7 +122,9 @@ function _onCloseSocket(socket) {
         DB_DevicesUpdate(socket.mobileID, 0)
     }
 }
-function _onErrorSocket(socketError, socket) { }
+function _onErrorSocket(socketError, socket) { 
+    console.log("ERROR SOCKET:", socketError, socket.mobileID)
+}
 
 
 const ServerTCP = (serverPort, serverHost) => {
