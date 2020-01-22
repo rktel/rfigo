@@ -97,6 +97,7 @@ function _onDataSocket(data, socket) {
             socket.mobileID = mobileID
             sockets.push(socket)
             DB_DevicesUpdate(mobileID, 1)
+            socket.write(mobileID)
         } else if (socket.mobileID == mobileID) {
             let index = sockets.findIndex(function (element) {
                 return element.mobileID === mobileID
@@ -106,6 +107,7 @@ function _onDataSocket(data, socket) {
                 socket.mobileID = mobileID
                 sockets.push(socket)
                 DB_DevicesUpdate(socket.mobileID, 1)
+                socket.write(mobileID)
             }
         }else{
             console.log('Devices undefined')
