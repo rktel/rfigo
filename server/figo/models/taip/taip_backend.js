@@ -88,6 +88,7 @@ function _onDataSocket(data, socket) {
     //const socketAddress = socket.remoteAddress
     //const socketPort = socket.remotePort
     const rawData = data.toString().trim()
+    console.log(rawData)
     const chunkraw = rawData.split(";")
     const mobileID = chunkraw[chunkraw.length - 1].match(/\d/g).join("").length == 15 ?
         chunkraw[chunkraw.length - 1].match(/\d/g).join("") : false
@@ -97,7 +98,15 @@ function _onDataSocket(data, socket) {
             sockets.push(socket)
             DB_DevicesUpdate(mobileID, 1)
         } else if (socket.mobileID == mobileID) {
-            
+            let index = sockets.findIndex(function (element) {
+                return element.mobileID === mobileID
+            })
+            if (index !== -1) {
+                sockets.splice(index, 1)
+                socket.mobileID = mobileID
+                sockets.push(socket)
+                DB_DevicesUpdate(socket.mobileID, 1)
+            }
         }else{
             console.log('Devices undefined')
         }
