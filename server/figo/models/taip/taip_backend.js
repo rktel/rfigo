@@ -52,11 +52,12 @@ function _onDataSocket(data, socket) {
 
     }
 }
-function _onCloseSocket(socket) {
+function _onCloseSocket(hadError, socket) {
     let index = sockets.findIndex(function (element) {
         return element.mobileID === socket.mobileID
     })
     if (index !== -1) {
+        console.log('closeSocket>>mobileID and hadError:', socket.mobileID, hadError)
         sockets.splice(index, 1)
         DB_DevicesUpdate(socket.mobileID, 0)
     }
@@ -71,6 +72,30 @@ function _onErrorSocket(socketError, socket) {
         DB_DevicesUpdate(socket.mobileID, 0)
     }
 }
+function _onConnect(socket) {
+    console.log('_onConnect')
+    console.log(socket.mobileID)
+ }
+function _onDrain(socket) {
+    console.log('_onDrain')
+    console.log(socket.mobileID)
+ }
+function _onEnd(socket) {
+    console.log('_onEnd')
+    console.log(socket.mobileID)
+ }
+function _onLookup(socket) {
+    console.log('_onLookup')
+    console.log(socket.mobileID)
+ }
+function _onReady(socket) { 
+    console.log('_onReady')
+    console.log(socket.mobileID)
+}
+function _onTimeout(socket) {
+    console.log('_onTimeout')
+    console.log(socket.mobileID)
+ }
 
 
 const ServerTCP = (serverPort, serverHost) => {
@@ -80,11 +105,29 @@ const ServerTCP = (serverPort, serverHost) => {
         socketIn.on('data', Meteor.bindEnvironment((data) => {
             _onDataSocket(data, socketIn)
         }))
-        socketIn.on('close', Meteor.bindEnvironment(() => {
-            _onCloseSocket(socketIn)
+        socketIn.on('close', Meteor.bindEnvironment((hadError) => {
+            _onCloseSocket(hadError, socketIn)
         }))
         socketIn.on('error', Meteor.bindEnvironment((socketError) => {
             _onErrorSocket(socketError, socketIn)
+        }))
+        socketIn.on('connect', Meteor.bindEnvironment(() => {
+            _onConnect(socketIn)
+        }))
+        socketIn.on('drain', Meteor.bindEnvironment(() => {
+            _onDrain(socketIn)
+        }))
+        socketIn.on('end', Meteor.bindEnvironment(() => {
+            _onEnd(socketIn)
+        }))
+        socketIn.on('lookup', Meteor.bindEnvironment(() => {
+            _onLookup(socketIn)
+        }))
+        socketIn.on('ready', Meteor.bindEnvironment(() => {
+            _onReady(socketIn)
+        }))
+        socketIn.on('timeout', Meteor.bindEnvironment(() => {
+            _onTimeout(socketIn)
         }))
     }))
     server.on('close', () => {
