@@ -21,7 +21,9 @@ function _onDataSocket(data, socket) {
     //const socketAddress = socket.remoteAddress
     //const socketPort = socket.remotePort
     const rawData = data.toString().trim()
-    console.log(rawData)
+    if (rawData.indexOf('REV') == -1) {
+        console.log(rawData)
+    } else { }
     const chunkraw = rawData.split(";")
     const mobileID = chunkraw[chunkraw.length - 1].match(/\d/g).join("").length == 15 ?
         chunkraw[chunkraw.length - 1].match(/\d/g).join("") : false
