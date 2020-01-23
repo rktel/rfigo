@@ -1,7 +1,128 @@
 import { createServer } from 'net'
 import { rstream } from '../../../../imports/api/streamers'
 import { Devices } from '../../../../imports/api/collections'
-import { deepStrictEqual } from 'assert'
+// import { deepStrictEqual } from 'assert'
+
+let sockets = []
+rstream.on('broadcast', function (mobileIDList, command, user) {
+    console.log(mobileIDList, command, user)
+
+    mobileIDList.map(mobileID => {
+        let index = sockets.findIndex(function (element) {
+            return element.mobileID === mobileID
+        })
+        if (index !== -1) {
+            console.log("Send command to:", sockets[index].mobileID)
+            sockets[index].write(command)
+        }
+    })
+})
+function _onDataSocket(data, socket) {
+    //const socketAddress = socket.remoteAddress
+    //const socketPort = socket.remotePort
+    const rawData = data.toString().trim()
+    console.log(rawData)
+    const chunkraw = rawData.split(";")
+    const mobileID = chunkraw[chunkraw.length - 1].match(/\d/g).join("").length == 15 ?
+        chunkraw[chunkraw.length - 1].match(/\d/g).join("") : false
+    if (mobileID) {
+        if (socket.mobileID == undefined) {
+            socket.mobileID = mobileID
+            sockets.push(socket)
+            DB_DevicesUpdate(mobileID, 1)
+            socket.write(mobileID)
+            Meteor.setTimeout(() => { socket.write(mobileID) }, 1000)
+        } else if (socket.mobileID == mobileID) {
+            let index = sockets.findIndex(function (element) {
+                return element.mobileID === mobileID
+            })
+            if (index !== -1) {
+                sockets.splice(index, 1)
+                socket.mobileID = mobileID
+                sockets.push(socket)
+                DB_DevicesUpdate(socket.mobileID, 1)
+                socket.write(mobileID)
+                Meteor.setTimeout(() => { socket.write(mobileID) }, 1000)
+            }
+        } else {
+            console.log('Devices undefined')
+        }
+
+    }
+}
+function _onCloseSocket(socket) {
+    let index = sockets.findIndex(function (element) {
+        return element.mobileID === socket.mobileID
+    })
+    if (index !== -1) {
+        sockets.splice(index, 1)
+        DB_DevicesUpdate(socket.mobileID, 0)
+    }
+}
+function _onErrorSocket(socketError, socket) {
+    console.log("ERROR SOCKET:", socket.mobileID)
+    let index = sockets.findIndex(function (element) {
+        return element.mobileID === socket.mobileID
+    })
+    if (index !== -1) {
+        sockets.splice(index, 1)
+        DB_DevicesUpdate(socket.mobileID, 0)
+    }
+}
+
+
+const ServerTCP = (serverPort, serverHost) => {
+
+    const server = createServer(Meteor.bindEnvironment((socketIn) => {
+
+        socketIn.on('data', Meteor.bindEnvironment((data) => {
+            _onDataSocket(data, socketIn)
+        }))
+        socketIn.on('close', Meteor.bindEnvironment(() => {
+            _onCloseSocket(socketIn)
+        }))
+        socketIn.on('error', Meteor.bindEnvironment((socketError) => {
+            _onErrorSocket(socketError, socketIn)
+        }))
+    }))
+    server.on('close', () => {
+        console.log('Server TCP Close');
+        sockets = [];
+    })
+    server.on('error', (serverError) => {
+        if (serverError.code === 'EADDRINUSE') {
+            setTimeout(() => {
+                server.close();
+                server.listen(serverPort, serverHost, () => {
+                    console.log(`ServerTCP ReUp on port ${serverPort}`)
+                });
+            }, 1000);
+        }
+    })
+    server.listen(serverPort, serverHost, () => {
+        console.log(`ServerTCP Up on port ${serverPort}`)
+    });
+}
+
+/* Database */
+const DB_DevicesUpdate = (mobileID, status) => {
+    /** Status: 0 = 'offline', 1 = 'online' */
+    Devices.update({ 'mobileID': mobileID }, { $set: { status } }, { upsert: true }, (error, success) => {
+        if (error === null && success === 1) {
+            rstream.emit('devicesUpdate')
+        }
+    })
+}
+const DB_DevicesReset = () => {
+    /** Set all to offline */
+    Devices.update({}, { $set: { status: 0 } }, { multi: true })
+}
+
+
+
+DB_DevicesReset()
+ServerTCP(7100, '0.0.0.0')
+
 // import { _ } from 'meteor/underscore'
 
 /*
@@ -64,106 +185,14 @@ rstream.on('sendBroadcast', (selectedDevicesCP, inputChat, userFullname) => {
         const container = getContainer(indexContainer)
         const sock = container.get(mobileID)
         sock.write(inputChat, () => {
-          
+
         })
     })
 })
 
 */
-let sockets = []
-rstream.on('broadcast', function (mobileIDList, command, user) {
-    console.log(mobileIDList, command, user)
 
-    mobileIDList.map(mobileID => {
-        let index = sockets.findIndex(function (element) {
-            return element.mobileID === mobileID
-        })
-        if (index !== -1) {
-            console.log("Send command to:", sockets[index].mobileID)
-            sockets[index].write(command)
-        }
-    })
-})
-function _onDataSocket(data, socket) {
-    //const socketAddress = socket.remoteAddress
-    //const socketPort = socket.remotePort
-    const rawData = data.toString().trim()
-    console.log(rawData)
-    const chunkraw = rawData.split(";")
-    const mobileID = chunkraw[chunkraw.length - 1].match(/\d/g).join("").length == 15 ?
-        chunkraw[chunkraw.length - 1].match(/\d/g).join("") : false
-    if (mobileID) {
-        if (socket.mobileID == undefined) {
-            socket.mobileID = mobileID
-            sockets.push(socket)
-            DB_DevicesUpdate(mobileID, 1)
-            socket.write(mobileID)
-            Meteor.setTimeout(()=>{socket.write(mobileID)},1000)
-        } else if (socket.mobileID == mobileID) {
-            let index = sockets.findIndex(function (element) {
-                return element.mobileID === mobileID
-            })
-            if (index !== -1) {
-                sockets.splice(index, 1)
-                socket.mobileID = mobileID
-                sockets.push(socket)
-                DB_DevicesUpdate(socket.mobileID, 1)
-                socket.write(mobileID)
-                Meteor.setTimeout(()=>{socket.write(mobileID)},1000)
-            }
-        }else{
-            console.log('Devices undefined')
-        }
-
-    }
-}
-function _onCloseSocket(socket) {
-    let index = sockets.findIndex(function (element) {
-        return element.mobileID === socket.mobileID
-    })
-    if (index !== -1) {
-        sockets.splice(index, 1)
-        DB_DevicesUpdate(socket.mobileID, 0)
-    }
-}
-function _onErrorSocket(socketError, socket) { 
-    console.log("ERROR SOCKET:", socketError, socket.mobileID)
-}
-
-
-const ServerTCP = (serverPort, serverHost) => {
-
-    const server = createServer(Meteor.bindEnvironment((socketIn) => {
-
-        socketIn.on('data', Meteor.bindEnvironment((data) => {
-            _onDataSocket(data, socketIn)
-        }))
-        socketIn.on('close', Meteor.bindEnvironment(() => {
-            _onCloseSocket(socketIn)
-        }))
-        socketIn.on('error', Meteor.bindEnvironment((socketError) => {
-            _onErrorSocket(socketError, socketIn)
-        }))
-    }))
-    server.on('close', () => {
-        console.log('Server TCP Close');
-        sockets = [];
-    })
-    server.on('error', (serverError) => {
-        if (serverError.code === 'EADDRINUSE') {
-            setTimeout(() => {
-                server.close();
-                server.listen(serverPort, serverHost, () => {
-                    console.log(`ServerTCP ReUp on port ${serverPort}`)
-                });
-            }, 1000);
-        }
-    })
-    server.listen(serverPort, serverHost, () => {
-        console.log(`ServerTCP Up on port ${serverPort}`)
-    });
-}
-
+/*
 const onDataSocket = (data, sock) => {
     const { mobileID } = PDU(data)
     if (mobileID) {
@@ -176,9 +205,9 @@ const onDataSocket = (data, sock) => {
             console.log('Conectado:  %s', mobileID)
             DB_DevicesUpdate(mobileID, 1)
         } else {
-            /**HERE DATA FREQUENCY*/
+
         }
-        sock.write(mobileID) // Send ACK
+        sock.write(mobileID)
     }
 }
 const onErrorSocket = (error, sock) => {
@@ -200,20 +229,7 @@ const onCloseSocket = (sock) => {
         }
     }
 }
-/* Database */
-const DB_DevicesUpdate = (mobileID, status) => {
-    /** Status: 0 = 'offline', 1 = 'online' */
-    Devices.update({ 'mobileID': mobileID }, { $set: { status } }, { upsert: true }, (error, success) => {
-        if (error === null && success === 1) {
-            rstream.emit('devicesUpdate')
-        }
-    })
-}
-const DB_DevicesReset = () => {
-    /** Set all to offline */
-    Devices.update({}, { $set: { status: 0 } }, { multi: true })
-}
-/* PDU (Parser) */
+
 const PDU = (raw) => {
 
     const parser = (chunkraw) => {
@@ -238,5 +254,4 @@ const PDU = (raw) => {
 
 }
 
-DB_DevicesReset()
-ServerTCP(7100, '0.0.0.0')
+*/
