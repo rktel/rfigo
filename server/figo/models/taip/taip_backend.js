@@ -22,7 +22,7 @@ rstream.on('broadcast', function (mobileIDList, command, user) {
 function _onDataSocket(data, socket) {
     //const socketAddress = socket.remoteAddress
     //const socketPort = socket.remotePort
-    
+
     const rawData = data.toString().trim()
     if (rawData.indexOf('REV') == -1) {
         console.log(rawData)
@@ -78,34 +78,43 @@ function _onErrorSocket(socketError, socket) {
 function _onConnect(socket) {
     console.log('_onConnect')
     console.log(socket.mobileID)
- }
+}
 function _onDrain(socket) {
     console.log('_onDrain')
     console.log(socket.mobileID)
- }
+}
 function _onEnd(socket) {
     console.log('_onEnd')
     console.log(socket.mobileID)
- }
+}
 function _onLookup(socket) {
     console.log('_onLookup')
     console.log(socket.mobileID)
- }
-function _onReady(socket) { 
+}
+function _onReady(socket) {
     console.log('_onReady')
     console.log(socket.mobileID)
 }
 function _onTimeout(socket) {
     console.log('_onTimeout')
     console.log(socket.mobileID)
-    socket.end()
- }
+
+    let index = sockets.findIndex(function (element) {
+        return element.mobileID === socket.mobileID
+    })
+    if (index !== -1) {
+        sockets.splice(index, 1)
+        socket.end()
+        DB_DevicesUpdate(socket.mobileID, 0)
+    }
+
+}
 
 
 const ServerTCP = (serverPort, serverHost) => {
 
     const server = createServer(Meteor.bindEnvironment((socketIn) => {
-        socketIn.setTimeout(3000)
+        socketIn.setTimeout(1000 * 3600)
         socketIn.on('data', Meteor.bindEnvironment((data) => {
             _onDataSocket(data, socketIn)
         }))
