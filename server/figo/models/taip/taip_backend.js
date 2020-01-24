@@ -1,3 +1,5 @@
+// 01178986SKY894F
+
 import { createServer } from 'net'
 import { rstream } from '../../../../imports/api/streamers'
 import { Devices } from '../../../../imports/api/collections'
@@ -20,6 +22,7 @@ rstream.on('broadcast', function (mobileIDList, command, user) {
 function _onDataSocket(data, socket) {
     //const socketAddress = socket.remoteAddress
     //const socketPort = socket.remotePort
+    
     const rawData = data.toString().trim()
     if (rawData.indexOf('REV') == -1) {
         console.log(rawData)
@@ -95,13 +98,14 @@ function _onReady(socket) {
 function _onTimeout(socket) {
     console.log('_onTimeout')
     console.log(socket.mobileID)
+    socket.end()
  }
 
 
 const ServerTCP = (serverPort, serverHost) => {
 
     const server = createServer(Meteor.bindEnvironment((socketIn) => {
-
+        socketIn.setTimeout(3000)
         socketIn.on('data', Meteor.bindEnvironment((data) => {
             _onDataSocket(data, socketIn)
         }))
