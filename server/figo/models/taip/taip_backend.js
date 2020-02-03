@@ -10,11 +10,14 @@ function mainServerTCP(svr, port, host = '0.0.0.0') {
     // Server on connection
     svr.addListener('connection', clientSocket => {
         svr.getConnections((getConnectionsError, countClients) => log(`clientSocket connections: ${countClients}`))
-        clientSocket.on('data',(rawData)=>{
-            parseData(rawData.toString())
+        clientSocket.on('data', (rawData) => {
+            const { mobileID } = parseData(rawData.toString())
+            if (mobileID) {
+                log(mobileID)
+            }
         })
-        clientSocket.on('error',(socketError)=>{})
-        clientSocket.on('close',()=>{})
+        clientSocket.on('error', (socketError) => { })
+        clientSocket.on('close', () => { })
     })
     // Server error
     svr.addListener('error', (svrError) => {
@@ -35,10 +38,10 @@ function mainServerTCP(svr, port, host = '0.0.0.0') {
     })
 
     // Process Data
-    function parseData(data){
-        if(data.includes('ID=')){
+    function parseData(data) {
+        if (data.includes('ID=')) {
             const splitData = data.split('\r\n')[0]
-            const lastField = splitData.split(';')[splitData.split(';').length-1]
+            const lastField = splitData.split(';')[splitData.split(';').length - 1]
             const imei = lastField.match(/(\d+)/)
             return {
                 mobileID: imei[0]
