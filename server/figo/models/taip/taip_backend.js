@@ -5,6 +5,7 @@ import { rstream } from '../../../../imports/api/streamers'
 import { Devices } from '../../../../imports/api/collections'
 
 function mainServerTCP(svr, port, host = '0.0.0.0') {
+    let mainTimeCounter = 0
     // Server Listen
     svr.listen(port, host)
     // Server on connection
@@ -31,10 +32,22 @@ function mainServerTCP(svr, port, host = '0.0.0.0') {
     })
     // Main Timer Reset
     setInterval(() => {
-        //svr.close()
-        log('Peppa', new Date().toISOString())
-    }, 10000)
+        mainTimeCounter++
+        if (mainTimeCounter == 10) {
+            log('OFF', new Date().toISOString())
+            svr.off()
+        }
+        if (mainTimeCounter == 15) {
+            log('ON', new Date().toISOString())
+            svr.on()
+            mainTimeCounter = 0
+        }
+
+
+    }, 1000)
 }
+
+
 
 mainServerTCP(server, 7100)
 
