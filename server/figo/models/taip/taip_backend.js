@@ -4,7 +4,7 @@ const log = (...params) => console.log(...params)
 import { rstream } from '../../../../imports/api/streamers'
 import { Devices } from '../../../../imports/api/collections'
 
-function mainServerTCP(svr, port, host = 'localhost') {
+function mainServerTCP(svr, port, host = '0.0.0.0') {
     svr.listen(port, host)
     svr.addListener('connection', clientSocket => {
         log('Conectado', svr.connections)
