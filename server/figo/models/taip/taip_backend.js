@@ -31,7 +31,8 @@ function mainServerTCP(svr, port, host = '0.0.0.0') {
     })
     // Main Timer Reset
     setInterval(() => {
-        svr.close()
+        //svr.close()
+        log('Peppa', new Date().toISOString())
     }, 10000)
 }
 
