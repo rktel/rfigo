@@ -11,15 +11,7 @@ function mainServerTCP(svr, port, host = '0.0.0.0') {
     // Server on connection
     svr.addListener('connection', clientSocket => {
         svr.getConnections((getConnectionsError, countClients) => log(`clientSocket connections: ${countClients}`))
-        setInterval(() => {
-            mainTimeCounter++
-            if (mainTimeCounter == 10) {
-                log('OFF', new Date().toISOString())
-                clientSocket.destroy()
-                mainTimeCounter = 0
-            }
-        }, 1000)
-
+        
     })
     // Server error
     svr.addListener('error', (svrError) => {
