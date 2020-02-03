@@ -39,7 +39,8 @@ function mainServerTCP(svr, port, host = '0.0.0.0') {
         if(data.includes('ID=')){
             const splitData = data.split('\r\n')[0]
             const lastField = splitData.split(';')[splitData.split(';').length-1]
-            console.log(lastField)
+            const imei = lastField.match(/(\d+)/)
+            log(imei)
         }
         return false
     }
