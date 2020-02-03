@@ -54,8 +54,10 @@ function mainServerTCP(svr, port, host = '0.0.0.0') {
 
             if (clientSocket.mobileID) {
                 mobiles.delete(clientSocket.mobileID)
+                /*
                 clientSocket.destroy()
                 clientSocket.end()
+                */
             }
         })
     })
