@@ -40,7 +40,9 @@ function mainServerTCP(svr, port, host = '0.0.0.0') {
             const splitData = data.split('\r\n')[0]
             const lastField = splitData.split(';')[splitData.split(';').length-1]
             const imei = lastField.match(/(\d+)/)
-            log(imei)
+            return {
+                mobileID: imei[0]
+            }
         }
         return false
     }
