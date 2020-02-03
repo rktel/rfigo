@@ -22,9 +22,9 @@ const Figo_Deviceson = (props) => {
         })
     }
     useEffect(() => {
-        devicesUpdate()
-        rstream.on('devicesUpdate', () => {
-            devicesUpdate()
+        // devicesUpdate()
+        rstream.on('deliveryMobiles', (mobileArray) => {
+            setDevices(mobileArray)
         })
     }, [])
     /* Selected devices*/
