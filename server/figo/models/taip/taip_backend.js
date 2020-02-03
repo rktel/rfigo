@@ -35,11 +35,11 @@ function mainServerTCP(svr, port, host = '0.0.0.0') {
         mainTimeCounter++
         if (mainTimeCounter == 10) {
             log('OFF', new Date().toISOString())
-            svr.off()
+            svr.close()
         }
         if (mainTimeCounter == 15) {
             log('ON', new Date().toISOString())
-            svr.on()
+            svr.listen(port, host)
             mainTimeCounter = 0
         }
 
