@@ -18,6 +18,7 @@ function mainServerTCP(svr, port, host = '0.0.0.0') {
         })
         clientSocket.on('data', (rawData) => {
             const { mobileID } = parseData(rawData.toString())
+            log(mobileID)
             if (mobileID && !clientSocket.destroyed) {
                 clientSocket.write(mobileID)
                 clientSocket.mobileID = mobileID
@@ -29,9 +30,11 @@ function mainServerTCP(svr, port, host = '0.0.0.0') {
             }
         })
         clientSocket.on('error', (socketError) => {
+            log('clientSocket:error:', clientSocket.mobileID, socketError)
             clientSocket.destroy()
         })
         clientSocket.on('close', () => {
+            log('clientSocket:close:', clientSocket.mobileID)
             if (clientSocket.mobileID) {
                 mobiles.delete(clientSocket.mobileID)
             }
