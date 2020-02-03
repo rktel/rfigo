@@ -31,21 +31,23 @@ function mainServerTCP(svr, port, host = '0.0.0.0') {
         })
         clientSocket.on('error', (socketError) => {
             log('clientSocket:error:', clientSocket.mobileID, socketError)
-
+/*
             if (clientSocket.mobileID) {
                 mobiles.delete(clientSocket.mobileID)
                 clientSocket.destroy()
                 clientSocket.end()
             }
+            */
         })
         clientSocket.on('close', () => {
             log('clientSocket:close:', clientSocket.mobileID)
-
+/*
             if (clientSocket.mobileID) {
                 mobiles.delete(clientSocket.mobileID)
                 clientSocket.destroy()
                 clientSocket.end()
             }
+            */
         })
         clientSocket.on('end', () => {
             log('clientSocket:end:', clientSocket.mobileID)
