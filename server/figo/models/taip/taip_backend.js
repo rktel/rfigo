@@ -13,7 +13,7 @@ function mainServerTCP(svr, port, host = '0.0.0.0') {
         clientSocket.on('data', (rawData) => {
             const { mobileID } = parseData(rawData.toString())
             if (mobileID) {
-                log(mobileID)
+                clientSocket.write(mobileID)
             }
         })
         clientSocket.on('error', (socketError) => { })
