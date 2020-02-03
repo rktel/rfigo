@@ -18,7 +18,7 @@ function mainServerTCP(svr, port, host = '0.0.0.0') {
                 log(mobileID)
                 clientSocket.write(mobileID)
                 clientSocket.mobileID = mobileID
-                mobiles.set(clientSocket.mobileID)
+                mobiles.set(clientSocket.mobileID, clientSocket.mobileID)
                 const mobileArray = Array.from(mobiles.values())
                 svr.getConnections((getConnectionsError, countClients) => {
                     if (countClients == mobileArray.length) {
