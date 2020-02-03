@@ -7,7 +7,7 @@ import { Devices } from '../../../../imports/api/collections'
 function mainServerTCP(svr, port, host = '0.0.0.0') {
     svr.listen(port, host)
     svr.addListener('connection', clientSocket => {
-        log('Conectado', svr.connections)
+        svr.getConnections((getConnectionsError, countClients) => log(`Connections number: ${countClients}`))
     })
 }
 
