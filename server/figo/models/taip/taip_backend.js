@@ -6,35 +6,42 @@ import { Devices } from '../../../../imports/api/collections'
 
 function mainServerTCP(svr, port, host = '0.0.0.0') {
     //variables
-    let numberOfClients = 0
     let mobiles = new Map()
     // Server Listen
     svr.listen(port, host)
     // Server on connection
     svr.addListener('connection', clientSocket => {
-        svr.getConnections((getConnectionsError, countClients) => {
-            log(`clientSocket connections: ${countClients}`)
-            numberOfClients = countClients
-        })
+        svr.getConnections((getConnectionsError, countClients) => log(`clientSocket connections: ${countClients}`))
         clientSocket.on('data', (rawData) => {
             const { mobileID } = parseData(rawData.toString())
-            log(mobileID)
-            if (mobileID && !clientSocket.destroyed) {
+            if (mobileID) {
+                log(mobileID)
                 clientSocket.write(mobileID)
                 clientSocket.mobileID = mobileID
-                mobiles.set(mobileID, mobileID)
+                mobiles.set(clientSocket.mobileID)
                 const mobileArray = Array.from(mobiles.values())
-                if (numberOfClients == mobileArray.length) {
-                    deliveryMobiles(mobileArray)
-                }
+                svr.getConnections((getConnectionsError, countClients) => {
+                    if (countClients == mobileArray.length) {
+                        deliveryMobiles(mobileArray)
+                    }
+                })
             }
         })
         clientSocket.on('error', (socketError) => {
             log('clientSocket:error:', clientSocket.mobileID, socketError)
             clientSocket.destroy()
+            if (clientSocket.mobileID) {
+                mobiles.delete(clientSocket.mobileID)
+            }
         })
         clientSocket.on('close', () => {
             log('clientSocket:close:', clientSocket.mobileID)
+            if (clientSocket.mobileID) {
+                mobiles.delete(clientSocket.mobileID)
+            }
+        })
+        clientSocket.on('end', () => {
+            log('clientSocket:end:', clientSocket.mobileID)
             if (clientSocket.mobileID) {
                 mobiles.delete(clientSocket.mobileID)
             }
