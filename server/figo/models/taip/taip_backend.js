@@ -5,13 +5,16 @@ import { rstream } from '../../../../imports/api/streamers'
 import { Devices } from '../../../../imports/api/collections'
 
 function mainServerTCP(svr, port, host = '0.0.0.0') {
-    let mainTimeCounter = 0
     // Server Listen
     svr.listen(port, host)
     // Server on connection
     svr.addListener('connection', clientSocket => {
         svr.getConnections((getConnectionsError, countClients) => log(`clientSocket connections: ${countClients}`))
-        
+        clientSocket.on('data',(rawData)=>{
+            parseData(rawData.toString())
+        })
+        clientSocket.on('error',(socketError)=>{})
+        clientSocket.on('close',()=>{})
     })
     // Server error
     svr.addListener('error', (svrError) => {
@@ -30,6 +33,16 @@ function mainServerTCP(svr, port, host = '0.0.0.0') {
             svr.listen(port, host);
         }, 1000);
     })
+
+    // Process Data
+    function parseData(data){
+        if(data.includes('ID=')){
+            const splitData = data.split('\r\n')[0]
+            const lastField = splitData.split(';')[splitData.split(';').length-1]
+            console.log(lastField)
+        }
+        return false
+    }
 
 }
 
