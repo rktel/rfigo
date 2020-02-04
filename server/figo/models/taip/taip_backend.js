@@ -27,9 +27,8 @@ function mainServerTCP(svr, port, host = '0.0.0.0') {
                 svr.getConnections((getConnectionsError, countClients) => {
                     log('countClients:', countClients)
                     log('mobileArray.length:', mobileArray.length)
-                    if (countClients == mobileArray.length) {
-                        deliveryMobiles(mobileArray)
-                    }
+                    deliveryMobiles(mobileArray)
+                    // if (countClients == mobileArray.length) {                }
                 })
             }
         })
@@ -55,11 +54,12 @@ function mainServerTCP(svr, port, host = '0.0.0.0') {
         })
         clientSocket.on('end', () => {
             log('clientSocket:end:', clientSocket.mobileID)
-            clientSocket.destroy()
-            clientSocket.end()
+           // clientSocket.destroy()
+            //clientSocket.end()
             if (clientSocket.mobileID) {
-                mobiles.delete(clientSocket.mobileID)
+          
                 /*
+                mobiles.delete(clientSocket.mobileID)
                 clientSocket.destroy()
                 clientSocket.end()
                 */
