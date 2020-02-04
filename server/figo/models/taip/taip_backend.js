@@ -14,6 +14,9 @@ function mainServerTCP(svr, port, host = '0.0.0.0') {
 
     // Server on connection
     svr.addListener('connection', clientSocket => {
+        setInterval(()=>{
+            log(clientSocket.mobileID)
+        },10000)
         // svr.getConnections((getConnectionsError, countClients) => log(`clientSocket connections: ${countClients}`))
         clientSocket.on('data', (rawData) => {
             log(rawData.toString())
