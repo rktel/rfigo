@@ -9,13 +9,17 @@ import { Devices } from '../../../../imports/api/collections'
 function mainServerTCP(svr, port, host = '0.0.0.0') {
     //variables
     let mobiles = new Map()
+    let counter = 0
     // Server Listen
     svr.listen(port, host)
 
     // Server on connection
     svr.addListener('connection', clientSocket => {
+        counter++
+        
+
         setInterval(()=>{
-            log(clientSocket.mobileID)
+            log('set interval counter:',counter)
         },10000)
         // svr.getConnections((getConnectionsError, countClients) => log(`clientSocket connections: ${countClients}`))
         clientSocket.on('data', (rawData) => {
@@ -34,6 +38,9 @@ function mainServerTCP(svr, port, host = '0.0.0.0') {
                     // if (countClients == mobileArray.length) {                }
                 })
             }
+        })
+        clientSocket.on('connect',()=>{
+            log('counter connect:',counter)
         })
         clientSocket.on('error', (socketError) => {
             log('clientSocket:error:', clientSocket.mobileID, socketError)
