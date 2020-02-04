@@ -1,18 +1,22 @@
-const server = require('net').createServer()
+const server = require('net').createServer({ allowHalfOpen: true })
 const log = (...params) => console.log(...params)
 
 import { rstream } from '../../../../imports/api/streamers'
 import { Devices } from '../../../../imports/api/collections'
+
+
 
 function mainServerTCP(svr, port, host = '0.0.0.0') {
     //variables
     let mobiles = new Map()
     // Server Listen
     svr.listen(port, host)
+
     // Server on connection
     svr.addListener('connection', clientSocket => {
-        svr.getConnections((getConnectionsError, countClients) => log(`clientSocket connections: ${countClients}`))
+        // svr.getConnections((getConnectionsError, countClients) => log(`clientSocket connections: ${countClients}`))
         clientSocket.on('data', (rawData) => {
+            log(rawData.toString())
             const { mobileID } = parseData(rawData.toString())
             if (mobileID) {
                 log(mobileID)
@@ -21,8 +25,8 @@ function mainServerTCP(svr, port, host = '0.0.0.0') {
                 mobiles.set(clientSocket.mobileID, clientSocket.mobileID)
                 const mobileArray = Array.from(mobiles.values())
                 svr.getConnections((getConnectionsError, countClients) => {
-                    log('countClients:',countClients)
-                    log('mobileArray.length:',mobileArray.length)
+                    log('countClients:', countClients)
+                    log('mobileArray.length:', mobileArray.length)
                     if (countClients == mobileArray.length) {
                         deliveryMobiles(mobileArray)
                     }
@@ -31,27 +35,28 @@ function mainServerTCP(svr, port, host = '0.0.0.0') {
         })
         clientSocket.on('error', (socketError) => {
             log('clientSocket:error:', clientSocket.mobileID, socketError)
-/*
-            if (clientSocket.mobileID) {
-                mobiles.delete(clientSocket.mobileID)
-                clientSocket.destroy()
-                clientSocket.end()
-            }
-            */
+            /*
+                        if (clientSocket.mobileID) {
+                            mobiles.delete(clientSocket.mobileID)
+                            clientSocket.destroy()
+                            clientSocket.end()
+                        }
+                        */
         })
         clientSocket.on('close', () => {
             log('clientSocket:close:', clientSocket.mobileID)
-/*
-            if (clientSocket.mobileID) {
-                mobiles.delete(clientSocket.mobileID)
-                clientSocket.destroy()
-                clientSocket.end()
-            }
-            */
+            /*
+                        if (clientSocket.mobileID) {
+                            mobiles.delete(clientSocket.mobileID)
+                            clientSocket.destroy()
+                            clientSocket.end()
+                        }
+                        */
         })
         clientSocket.on('end', () => {
             log('clientSocket:end:', clientSocket.mobileID)
-
+            clientSocket.destroy()
+            clientSocket.end()
             if (clientSocket.mobileID) {
                 mobiles.delete(clientSocket.mobileID)
                 /*
