@@ -16,10 +16,16 @@ function mainServerTCP(svr, port, host = '0.0.0.0') {
     svr.addListener('connection', clientSocket => {
 
         clientSocket.on('data', (rawData) => {
-            log(rawData.toString())
+
             const { mobileID } = parseData(rawData.toString())
             clientSocket.write(mobileID)
-            log(mobileID, clientSocket.remoteAddress, clientSocket.remotePort)
+            log('####################################START##############################################')
+            log('MobileID:', mobileID)
+            log('Data:', rawData.toString())
+            log('Remote IP and Port', clientSocket.remoteAddress, clientSocket.remotePort)
+            log('Local IP and Port', clientSocket.localAddress, clientSocket.localPort)
+            log('####################################END##############################################')
+
         })
         clientSocket.on('close', (hadError) => {
             log('clientSocket:close:', clientSocket.mobileID, 'Error Tx:', hadError)
