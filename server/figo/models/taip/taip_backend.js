@@ -7,28 +7,32 @@ import { Devices } from '../../../../imports/api/collections'
 
 
 function mainServerTCP(svr, port, host = '0.0.0.0') {
-    //variables
-    let mobiles = new Map()
+
+    //variables and constants
+    const mobiles = new Map()
+    const sendMobilesToWebTimer = 10 * 1000
     // Server Listen
     svr.listen(port, host)
-
+    // Send mobiles to Web Client
+    setInterval(() => {
+        deliveryMobiles(Array.from(mobiles.keys()))
+    }, sendMobilesToWebTimer)
     // Server on connection
     svr.addListener('connection', clientSocket => {
 
         clientSocket.on('data', (rawData) => {
-
-            const { mobileID } = parseData(rawData.toString())
-            clientSocket.write(mobileID)
-            log('####################################START##############################################')
-            log('MobileID:', mobileID)
-            log('Data:', rawData.toString())
-            log('Remote IP and Port', clientSocket.remoteAddress, clientSocket.remotePort)
-            log('Local IP and Port', clientSocket.localAddress, clientSocket.localPort)
-            log('####################################END##############################################')
-
+            const { mobileID } = parseData(rawData)
+            if (mobileID) {
+                clientSocket.write(mobileID)
+                if (!clientSocket['mobileID']) {
+                    clientSocket['mobileID'] = mobileID
+                    mobiles.set(clientSocket['mobileID'], mobileID)
+                }
+            }
         })
         clientSocket.on('close', (hadError) => {
             log('clientSocket:close:', clientSocket.mobileID, 'Error Tx:', hadError)
+            if (hadError && clientSocket.mobileID) mobiles.delete(clientSocket.mobileID)
         })
         clientSocket.on('error', () => log('clientSocket:error:', clientSocket.mobileID)
         )
@@ -54,12 +58,13 @@ function mainServerTCP(svr, port, host = '0.0.0.0') {
 
     // Process Data
     function parseData(data) {
-        if (data.includes('ID=')) {
-            const splitData = data.split('\r\n')[0]
-            const lastField = splitData.split(';')[splitData.split(';').length - 1]
-            const imei = lastField.match(/(\d+)/)
+        let unit = data.toString()
+        if (unit.includes('ID=')) {
+            unit = unit.split('\r\n')[0]
+            unit = unit.split(';')[unit.split(';').length - 1]
+            unit = unit.includes('ID=') ? unit.match(/(\d+)/)[0] : undefined
             return {
-                mobileID: imei[0]
+                mobileID: unit
             }
         }
         return false
